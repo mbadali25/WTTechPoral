@@ -1,0 +1,94 @@
+@model IEnumerable<WTTechPortal.Models.tasklist>
+
+    @{
+        ViewData["Title"] = "Task List";
+    }
+
+
+    <h2>Task List</h2>
+
+    <p>
+        <a asp-action="Create">Create a New Task</a>
+    </p>
+     <p>
+         @{ 
+             SelectList statuslist = ViewBag.statuslist;
+             SelectList priorities = ViewBag.priorities;
+             SelectList ownerlist = ViewBag.ownerlist;
+         }
+        
+<p>
+    @using (Html.BeginForm("Index", "tasklist", FormMethod.Get))
+    {
+       
+       <text>Filter By Owner: </text> @Html.DropDownList("owner", ownerlist, "Show All")<br />
+       <text>Filter By Priority: </text> @Html.DropDownList("prioity", priorities, "Show All")<br />
+       <text>Filter By Status: </text> @Html.DropDownList("status", statuslist, "Show All")
+       <input type="submit" value="Search" />
+    }
+ 
+
+        @Html.ActionLink("Reset Filters", "Index")
+   
+</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.task)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.actionitem)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.owner)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.priority)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.comments)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.completedate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.task)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.actionitem)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.statuses.statusname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.owners.ownername)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.prioritites.priorityname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.comments)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.completedate)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.id">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

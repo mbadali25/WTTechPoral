@@ -1,0 +1,87 @@
+@model WTTechPortal.Models.agenda
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>agenda</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="task" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="task" class="form-control" />
+                <span asp-validation-for="task" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="actionitem" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="actionitem" class="form-control" />
+                <span asp-validation-for="actionitem" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="status" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="status"
+                        asp-items="ViewBag.statuslist">
+                    <option>Please Select a Status</option>
+                </select>
+                <span asp-validation-for="status" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="owner" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="owner"
+                        asp-items="ViewBag.ownerlist">
+                    <option>Please Select a Owner</option>
+                </select>
+                <span asp-validation-for="owner" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="priority" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="priority"
+                        asp-items="ViewBag.priorities">
+                    <option>Please Select a Priority</option>
+                </select>
+                <span asp-validation-for="priority" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="comments" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="comments" class="form-control" />
+                <span asp-validation-for="comments" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="completedate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="completedate" class="form-control" />
+                <span asp-validation-for="completedate" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,85 @@
+@model WTTechPortal.Models.hypervperf
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>hypervperf</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="id" />
+        <div class="form-group">
+            <label asp-for="cpucores" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="cpucores" class="form-control" />
+                <span asp-validation-for="cpucores" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="cpuspd" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="cpuspd" class="form-control" />
+                <span asp-validation-for="cpuspd" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="date" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="date" class="form-control" />
+                <span asp-validation-for="date" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="mem" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="mem" class="form-control" />
+                <span asp-validation-for="mem" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="memfree" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="memfree" class="form-control" />
+                <span asp-validation-for="memfree" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="memused" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="memused" class="form-control" />
+                <span asp-validation-for="memused" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="org" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="org" class="form-control" />
+                <span asp-validation-for="org" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
