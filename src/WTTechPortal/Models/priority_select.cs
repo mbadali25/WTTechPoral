@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WTTechPortal.Models
 {
-    [Table("priority_select")]
+    
     public class priority_select 
     {
 
