@@ -13,6 +13,8 @@ using WTTechPortal.Data;
 using WTTechPortal.Models;
 using WTTechPortal.Services;
 using MySQL.Data.EntityFrameworkCore.Extensions;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace WTTechPortal
 {
@@ -41,11 +43,12 @@ namespace WTTechPortal
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void  ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+          
             services.AddApplicationInsightsTelemetry(Configuration);
-
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -54,7 +57,20 @@ namespace WTTechPortal
                 .AddDefaultTokenProviders();
             services.AddDbContext<WttechportalDbContext>(options =>
             options.UseMySQL(Configuration.GetConnectionString("MYSQLConnection")));
+
+            
+
+            services.AddMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.CookieName = ".WTTechPortalSession";
+                options.CookieDomain = "wttechsolutions.com";
+            });
             services.AddMvc();
+
+            //Enable Caching and Session
+
+
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -86,13 +102,15 @@ namespace WTTechPortal
 
             app.UseIdentity();
 
+            app.UseSession();
+            
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}/{owner?}/{priority?}/{status?}");
+                    template: "{controller=Home}/{action=Index}/{id?}/{owner?}/{priority?}/{status?}/{closedcheck?}");
             });
         }
     }

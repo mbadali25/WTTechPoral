@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.0",
-    "signature": "287a10a88c207d666f86a022a51c866f8ef21593"
+    "signature": "0418ff1fdfd4afc1fb040013e685ca7dc346b878"
   },
   "compilationOptions": {
     "defines": [
@@ -20,7 +20,6 @@
           "MySql.Data.EntityFrameworkCore": "7.0.4-ir-191",
           "System.ComponentModel.Annotations": "4.3.0",
           "Microsoft.AspNetCore.Http.Abstractions": "1.1.0",
-          "jQuery.UI.Widgets.Datepicker": "1.8.9",
           "Microsoft.ApplicationInsights.AspNetCore": "1.0.2",
           "Microsoft.AspNetCore.Authentication.Cookies": "1.1.0",
           "Microsoft.AspNetCore.Diagnostics": "1.1.0",
@@ -43,7 +42,8 @@
           "Microsoft.NETCore.App": "1.1.0",
           "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0",
           "System.Runtime.Loader": "4.3.0",
-          "jQuery.UI.Core": "1.8.9"
+          "Microsoft.DotNet.InternalAbstractions": "1.0.0",
+          "System.Text.Encoding.Extensions": "4.3.0"
         },
         "runtime": {
           "WTTechPortal.dll": {}
@@ -74,17 +74,6 @@
         },
         "compile": {
           "lib/netstandard1.0/Google.Protobuf.dll": {}
-        }
-      },
-      "jQuery/1.4.4": {},
-      "jQuery.UI.Core/1.8.9": {
-        "dependencies": {
-          "jQuery": "1.4.4"
-        }
-      },
-      "jQuery.UI.Widgets.Datepicker/1.8.9": {
-        "dependencies": {
-          "jQuery.UI.Core": "1.8.9"
         }
       },
       "Microsoft.ApplicationInsights/2.1.0": {
@@ -940,6 +929,24 @@
         },
         "compile": {
           "lib/netstandard1.6/Microsoft.DotNet.Cli.Utils.dll": {}
+        }
+      },
+      "Microsoft.DotNet.InternalAbstractions/1.0.0": {
+        "dependencies": {
+          "System.AppContext": "4.3.0",
+          "System.Collections": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.IO.FileSystem": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Runtime.InteropServices": "4.3.0",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.DotNet.InternalAbstractions.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.DotNet.InternalAbstractions.dll": {}
         }
       },
       "Microsoft.DotNet.PlatformAbstractions/1.1.0": {
@@ -4190,21 +4197,6 @@
       "serviceable": true,
       "sha512": "sha512-uBij/IkxC5L5Rla0xoRQTk+kPb4SkgOkbelsJcBMl6p0GsJ75h6S9zf6LsoOfh4bWRPlrK7eUHKpAKul0P6omQ=="
     },
-    "jQuery/1.4.4": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-kexCeYIZehR5fRjo8CK1sngN5SZEQRFNfCYZHMS1RxwEEiSKetBw/gliYJcLJdJEBB+e9aHqleLCjuaSI7u23g=="
-    },
-    "jQuery.UI.Core/1.8.9": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Sib0IXtCSVnA9wX6i0enHxHTZmBW0mLncfjtjjU3wWUMnQgmTxlenvOZBKUqpFjA0/nFQgsJqsANO74YphTc+g=="
-    },
-    "jQuery.UI.Widgets.Datepicker/1.8.9": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-cA1RW6ms1azPhXg6OKFptRPljO1Pky8WsUo57AHfHVIUvVZZA1GZ7Iygu9Sc+y33Mq7wncX9+hruDgzUm34N7w=="
-    },
     "Microsoft.ApplicationInsights/2.1.0": {
       "type": "package",
       "serviceable": true,
@@ -4468,12 +4460,17 @@
     "Microsoft.CSharp/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-TGDvymxyBdeAkDoQ2FxZmYq1VbDJpKsGeLreAcUQrNXCOVlDtJW0KNEKskLzVCKgv5MMtkE5T11aDiHygBzjAQ=="
+      "sha512": "sha512-P+MBhIM0YX+JqROuf7i306ZLJEjQYA9uUyRDE+OqwUI5sh41e2ZbPQV3LfAPh+29cmceE1pUffXsGfR4eMY3KA=="
     },
     "Microsoft.DotNet.Cli.Utils/1.0.0-preview2-003121": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-FLXqhQjkjj83Sh0TRlLEyMIMtAhDRJuPRWnDONtnCv5bozk1jPzflLEXYbk2xsnsOMpnYrUvKQbwUKUWyaXuFQ=="
+    },
+    "Microsoft.DotNet.InternalAbstractions/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AAguUq7YyKk3yDWPoWA8DrLZvURxB/LrDdTn1h5lmPeznkFUpfC3p459w5mQYQE0qpquf/CkSQZ0etiV5vRHFA=="
     },
     "Microsoft.DotNet.PlatformAbstractions/1.1.0": {
       "type": "package",
@@ -4748,7 +4745,7 @@
     "Microsoft.Win32.Registry/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-svlDFzuVdgwAAQW8AQhT/2Ukx8xf8uTCvlk4TG5pqIgxb5LInq2fEBIdLuEyAkA5qwGvxN1odp2aqS2LYMOFTA=="
+      "sha512": "sha512-Lw1/VwLH1yxz6SfFEjVRCN0pnflLEsWgnV4qsdJ512/HhTwnKXUG+zDQ4yTO3K/EJQemGoNaBHX5InISNKTzUQ=="
     },
     "MySql.Data.Core/7.0.4-ir-191": {
       "type": "package",
@@ -4883,7 +4880,7 @@
     "runtime.native.System.Net.Security/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-DtQHNRDZD05mjTTjJ6wFhD4lO/OB2lLnkMCIcrbeeyw1VucP1xSgPkzwvzpFdihNkZDDwu+p1FbZ374vEMAtxg=="
+      "sha512": "sha512-M2nN92ePS8BgQ2oi6Jj3PlTUzadYSIWLdZrHY1n1ZcW9o4wAQQ6W+aQ2lfq1ysZQfVCgDwY58alUdowrzezztg=="
     },
     "runtime.native.System.Security.Cryptography.Apple/4.3.0": {
       "type": "package",
@@ -4968,7 +4965,7 @@
     "System.Collections.Immutable/1.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-cI7JNc4rX9WpaUUZ8qog9QoRrM1zQjDNRKZDDkHlIA/Vvhr5rEhqgNP2nIZqW1jfNJI3iTTzOpWfJZQxq+5gcw=="
+      "sha512": "sha512-zukBRPUuNxwy9m4TGWLxKAnoiMc9+B+8VXeXVyPiBPvOd7yLgAlZ1DlsRWJjMx4VsvhhF2+6q6kO2GRbPja6hA=="
     },
     "System.Collections.NonGeneric/4.3.0": {
       "type": "package",
@@ -4988,7 +4985,7 @@
     "System.ComponentModel.Annotations/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-miS96xIjPb2X7hzx00mOJYkILDrW9Csx7Lbt2gOCZcMYnuohOtjKXsi2FU8kpdfvmcu9C1vyiOzSXqot8sIg0g=="
+      "sha512": "sha512-SY2RLItHt43rd8J9D8M8e8NM4m+9WLN2uUd9G0n1I4hj/7w+v3pzK6ZBjexlG1/2xvLKQsqir3UGVSyBTXMLWA=="
     },
     "System.ComponentModel.Primitives/4.3.0": {
       "type": "package",
@@ -5058,7 +5055,7 @@
     "System.Dynamic.Runtime/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-sMt3xI9LrAuIzIGlUEV7ObPW1oPVsnDtN5g9vY23YjeA7/hDbFjdQYar1R6z9wQbDMIYwcvKF02I4/Z8cYoEcw=="
+      "sha512": "sha512-SNVi1E/vfWUAs/WYKhE9+qlS6KqK0YVhnlT0HQtr8pMIA8YX3lwy3uPMownDwdYISBdmAF/2holEIldVp85Wag=="
     },
     "System.Globalization/4.3.0": {
       "type": "package",
@@ -5108,7 +5105,7 @@
     "System.IO.FileSystem.Watcher/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-TcelerBIeM+csv9L9T9JVKwVnTEE1H7s5d6gAt5nin/f8agowXMSvIfncCd0KF3g0OXnB3zFuld+Ze48mvIPjw=="
+      "sha512": "sha512-37IDFU2w6LJ4FrohcVlV1EXviUmAOJIbejVgOUtNaPQyeZW2D/0QSkH8ykehoOd19bWfxp3RRd0xj+yRRIqLhw=="
     },
     "System.IO.Pipes/4.3.0": {
       "type": "package",
@@ -5128,7 +5125,7 @@
     "System.Linq.Queryable/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-fv0AZBZIQPQdw76YTRTf/SXIkV1HF2HzxF52zkVUlqhNW6l4NXCs46frkIt4ibgFlJ/aRrViB7kI2CLU1IJtYw=="
+      "sha512": "sha512-In1Bmmvl/j52yPu3xgakQSI0YIckPUr870w4K5+Lak3JCCa8hl+my65lABOuKfYs4ugmZy25ScFerC4nz8+b6g=="
     },
     "System.Net.Http/4.3.0": {
       "type": "package",
@@ -5138,7 +5135,7 @@
     "System.Net.NameResolution/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-gxEtqX3yx4qVwbwojxzC7bWPy7xskfkC2nEjXhY4Lmjt1eO3JM4vI5K8F3spwEy0EA2411tCeCbaw+j9zicn/A=="
+      "sha512": "sha512-AFYl08R7MrsrEjqpQWTZWBadqXyTzNDaWpMqyxhb0d6sGhV6xMDKueuBXlLL30gz+DIRY6MpdgnHWlCh5wmq9w=="
     },
     "System.Net.Primitives/4.3.0": {
       "type": "package",
@@ -5148,7 +5145,7 @@
     "System.Net.Security/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-nEezLEV9wzfDYpncqa1JUFA5tvcGe92zbW31spcEN7eSvyEHUROF83MOMXk+8TWCWVnlVrtrh1VtNp/Dmb8bQg=="
+      "sha512": "sha512-IgJKNfALqw7JRWp5LMQ5SWHNKvXVz094U6wNE3c1i8bOkMQvgBL+MMQuNt3xl9Qg9iWpj3lFxPZEY6XHmROjMQ=="
     },
     "System.Net.Sockets/4.3.0": {
       "type": "package",
@@ -5163,7 +5160,7 @@
     "System.Numerics.Vectors/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-BCm5IIqLPgGdxrmcjKdlYL+Mug3eY48BWm9IchwNGw1+TKHwQf+5qvXlGp3L8lhdNO+O/0TRKO/vRC9U6LzD2w=="
+      "sha512": "sha512-uAIqmwiQPPXdCz59MQcyHwsH2MzIv24VGCS54kP/1GzTRTuU3hazmiPnGUTlKFia4B1DnbLWjTHoGyTI5BMCTQ=="
     },
     "System.ObjectModel/4.3.0": {
       "type": "package",
@@ -5198,7 +5195,7 @@
     "System.Reflection.Metadata/1.4.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Iq85rEoMwZOEXv8F9kjvlr4h17qScv25AS17SQsomhmi/KP4pInl1rPlJbcU5ASSkvd/F6V9D8rXk47WZL0qew=="
+      "sha512": "sha512-tc2ZyJgweHCLci5oQGuhQn9TD0Ii9DReXkHtZm3aAGp8xe40rpRjiTbMXOtZU+fr0BOQ46goE9+qIqRGjR9wGg=="
     },
     "System.Reflection.Primitives/4.3.0": {
       "type": "package",
@@ -5213,7 +5210,7 @@
     "System.Resources.Reader/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-vy57vIQKb9B/rPXvJzFf6zLMMwHji58EAJmFY+bBGlzOi0uuiCxVN+xpaw/n+nyAcCF0qwtG8/A+zbfCPob7LQ=="
+      "sha512": "sha512-AeSwdrdgsRnGRJDofYEJPlotJm6gDDg6WJ1/1lX2Yq8bPwicba7lanPi7adK0SE58zgN5PcGg/h0tuZS+IRAdw=="
     },
     "System.Resources.ResourceManager/4.3.0": {
       "type": "package",
@@ -5253,7 +5250,7 @@
     "System.Runtime.Loader/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-BTrTBEhZ57jZr0Evf0orePo64EvGg8jEyJaiXI8BWt3nZx8q0WKYwJ3aUbP3xRcnewa1sWNqAXemVpDhnM3s9Q=="
+      "sha512": "sha512-DHMaRn8D8YCK2GG2pw+UzNxn/OHVfaWx7OTLBD/hPegHZZgcZh3H6seWegrC4BYwsfuGrywIuT+MQs+rPqRLTQ=="
     },
     "System.Runtime.Numerics/4.3.0": {
       "type": "package",
@@ -5313,7 +5310,7 @@
     "System.Security.Principal.Windows/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-C0hsAnJOY0P5vsvMm68PO7oE0miKV3hbTc1sYbzgGE199tsw6Uew/ouWOe4T+WofZu9tPZfBvH3LnWWUicM8tQ=="
+      "sha512": "sha512-HVL1rvqYtnRCxFsYag/2le/ZfKLK4yMw79+s6FmKXbSCNN0JeAhrYxnRAHFoWRa0dEojsDcbBSpH3l22QxAVyw=="
     },
     "System.Text.Encoding/4.3.0": {
       "type": "package",
@@ -5348,7 +5345,7 @@
     "System.Threading.Overlapped/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-HbK9yJTU81YI7jH9Q6joAUMnJhb5DyR9Ho9wTit1vGjHORRBT0/8TaqOmtAq0OeH+ovbiwokPfqDicZftgxBcw=="
+      "sha512": "sha512-m3HQ2dPiX/DSTpf+yJt8B0c+SRvzfqAJKx+QDWi+VLhz8svLT23MVjEOHPF/KiSLeArKU/iHescrbLd3yVgyNg=="
     },
     "System.Threading.Tasks/4.3.0": {
       "type": "package",
@@ -5363,12 +5360,12 @@
     "System.Threading.Thread/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-crk8M3vbCAAWi+z9AsCXEMuew0C+sz7ouWnMNwcHfbP0Kqe72s9X8hrujmRBtswEA3RF6TUVatx5s+7VMwerdw=="
+      "sha512": "sha512-OHmbT+Zz065NKII/ZHcH9XO1dEuLGI1L2k7uYss+9C1jLxTC9kTZZuzUOyXHayRk+dft9CiDf3I/QZ0t8JKyBQ=="
     },
     "System.Threading.ThreadPool/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-pNWMJkMemlE53on9t6Q43MOlh9N9FT2zm35wNIzQLkb4p6hRyAHSPMlmEhLy65uvCFAFSMSqhDJECaaczArzCw=="
+      "sha512": "sha512-k/+g4b7vjdd4aix83sTgC9VG6oXYKAktSfNIJUNGxPEj7ryEOfzHHhfnmsZvjxawwcD9HyWXKCXmPjX8U4zeSw=="
     },
     "System.Threading.Timer/4.3.0": {
       "type": "package",
@@ -5388,7 +5385,7 @@
     "Libuv/1.9.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-3aXrzmpfn8XH0b/uOQbPOGQHrKW5me7mN7k5FHdJiwADoDzG/nECgXClrixjAT1k9i/Yg91QCM+rsU02L4KFdg=="
+      "sha512": "sha512-uqX2Frwf9PW8MaY7PRNY6HM5BpW1D8oj1EdqzrmbEFD5nH63Yat3aEjN/tws6Tw6Fk7LwmLBvtUh32tTeTaHiA=="
     },
     "Microsoft.CodeAnalysis.Analyzers/1.1.0": {
       "type": "package",
@@ -5413,7 +5410,7 @@
     "Microsoft.NETCore.App/1.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-KlE/9Gg0v3xQQcvQqQQHV8Y+Ck/9VnfIOCk7vn6HSNNaS2+czOdX065xsDszGKek/9oTNNJLKe0b1LegzrxyDQ=="
+      "sha512": "sha512-DFec+OUojDVocn1GxAL9uJg4qwsgkvKiQpv6BKd9ljGezvc9p6GpFv51IIakiujkVW/wBtQ0xlfjVSgS1UG/uw=="
     },
     "Microsoft.NETCore.DotNetHost/1.0.1": {
       "type": "package",

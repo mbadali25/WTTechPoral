@@ -1,0 +1,78 @@
+@model IEnumerable<WTTechPortal.Models.site_config>
+
+@{
+    ViewData["Title"] = "Site Configuration";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.adminemail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.smtppassword)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.smtpport)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.smtpserver)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sslenabled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sendasemail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.smtpuser)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.adminemail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.smtppassword)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.smtpport)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.smtpserver)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sslenabled)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sendasemail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.smtpuser)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

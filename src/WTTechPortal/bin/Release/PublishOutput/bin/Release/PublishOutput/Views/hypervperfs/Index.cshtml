@@ -1,0 +1,73 @@
+@model IEnumerable<WTTechPortal.Models.hypervperf>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cpuspd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cpucores)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.memfree)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.memused)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.org)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cpuspd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cpucores)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.memfree)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.memused)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.org)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>

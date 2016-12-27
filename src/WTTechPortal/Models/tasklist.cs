@@ -53,6 +53,8 @@ namespace WTTechPortal.Models
         [ForeignKey("status")]
         public status_select statuses { get; set; }
         [ForeignKey("owner")]
+        
+        
         public owner_select owners { get; set; }
 
 

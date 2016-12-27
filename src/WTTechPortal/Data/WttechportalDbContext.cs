@@ -18,7 +18,9 @@ namespace WTTechPortal.Data
 
         public DbSet<owner_select> owner_select { get; set; }
 
+        public DbSet <site_config> site_config { get; set; }
 
+        public DbSet<org_list> org_list { get; set; }
 
         public WttechportalDbContext(DbContextOptions<WttechportalDbContext> options)
             : base(options)

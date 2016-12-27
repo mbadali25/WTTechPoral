@@ -4,31 +4,40 @@
         ViewData["Title"] = "Task List";
     }
 
+@{
+    SelectList statuslist = ViewBag.statuslist;
+    SelectList priorities = ViewBag.priorities;
+    SelectList ownerlist = ViewBag.ownerlist;
+    string emailstatus = ViewBag.EmailStatus;
+}
 
     <h2>Task List</h2>
-
+    <div class="emailupdate">@Html.Display("emailstatus")
+    </div>
     <p>
         <a asp-action="Create">Create a New Task</a>
     </p>
      <p>
-         @{ 
-             SelectList statuslist = ViewBag.statuslist;
-             SelectList priorities = ViewBag.priorities;
-             SelectList ownerlist = ViewBag.ownerlist;
-         }
+
         
 <p>
-    @using (Html.BeginForm("Index", "tasklist", FormMethod.Get))
+    @using (Html.BeginForm("Index", "tasklist", FormMethod.Post))
     {
-       
+        
        <text>Filter By Owner: </text> @Html.DropDownList("owner", ownerlist, "Show All")<br />
        <text>Filter By Priority: </text> @Html.DropDownList("prioity", priorities, "Show All")<br />
-       <text>Filter By Status: </text> @Html.DropDownList("status", statuslist, "Show All")
+       <text>Filter By Status: </text> @Html.DropDownList("status", statuslist, "Show All") <br />
+       <text>HIde Closed Tasks: </text> @Html.CheckBox("closedcheck",true) <br />
+        
        <input type="submit" value="Search" />
     }
  
 
+  
+    
+
         @Html.ActionLink("Reset Filters", "Index")
+
    
 </p>
     <table class="table">
@@ -84,8 +93,7 @@
                         @Html.DisplayFor(modelItem => item.completedate)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.id">Details</a>
+                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> 
                         <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
                     </td>
                 </tr>

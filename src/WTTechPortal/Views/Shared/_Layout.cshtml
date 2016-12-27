@@ -17,20 +17,12 @@
     </environment>
     <script src="@Url.Content("~/lib/jquery/dist/jquery.js")"
            type="text/javascript"></script>
-    <script src="@Url.Content("~/lib/jquery/dist/core.js")"
-             type="text/javascript"></script>  
-    <script src="@Url.Content("~/lib/bootstrap/dist/js/bootstrap.js")"
+    <script src="@Url.Content("~/js/site.js")"
+            type="text/javascript"></script>
+        <script src="@Url.Content("~/lib/bootstrap/dist/js/bootstrap.js")"
             type="text/javascript"></script>
 
 
-      <script>
-        $('tr.row').each(function (index) {
-            var lastCol = $(this).children("td").eq(3).text();
-            if (lastCol == "False") {
-                $(this).css("background-color", "#c0c0c0");
-            }
-        });
-    </script>
 
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
 </head>

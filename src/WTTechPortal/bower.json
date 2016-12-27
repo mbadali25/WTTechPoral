@@ -4,12 +4,11 @@
   "dependencies": {
     "bootstrap": "3.3.6",
     "jquery": "2.2.3",
-    "jquery-validation": "1.14.0",
-    "jquery-validation-unobtrusive": "3.2.6",
-    "jquery-ui": "1.11.4",
-    "jqueryui-datepicker": "*"
+    "jquery-validation": "1.15.0",
+    "jquery-validation-unobtrusive": "3.2.6"
   },
   "resolutions": {
-    "jquery": ">=1.8"
+    "jquery": ">=1.8",
+    "jquery-validation": "1.15.0"
   }
 }
