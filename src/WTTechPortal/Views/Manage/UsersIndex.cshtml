@@ -1,0 +1,66 @@
+@model IEnumerable<WTTechPortal.Models.Login.aspnetuserroles>
+    @{
+        ViewData["Title"] = "User List";
+    }
+
+
+}
+
+    <h2>User List</h2>
+   
+ 
+
+
+
+   
+<!----
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @@Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @@Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @@Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @@Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @@Html.DisplayNameFor(model => model.RoleName)
+                </th>
+               
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @@foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @@Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @@Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @@Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @@Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        <@@Html.DisplayFor(modelItem => item.RoleName)
+                    </td>
+
+                    <td>
+                        <a asp-action="UsersEdit" asp-route-id="@@item.UserId">Edit</a> 
+                        <a asp-action="UsersDelete" asp-route-id="@@item.UserId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody> 
+    </table> --->

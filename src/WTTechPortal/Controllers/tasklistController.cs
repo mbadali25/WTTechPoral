@@ -11,10 +11,11 @@ using WTTechPortal.Models;
 using WTTechPortal.Services;
 using System;
 using Microsoft.AspNetCore.Http;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace WTTechPortal.Controllers
 {
+    [Authorize]
     public class tasklistController : Controller
     {
         private readonly WttechportalDbContext _context;
@@ -211,6 +212,7 @@ namespace WTTechPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> Edit(int id, [Bind("id,actionitem,comments,completedate,owner,priority,status,task")] tasklist tasklist)
         {
             if (id != tasklist.id)

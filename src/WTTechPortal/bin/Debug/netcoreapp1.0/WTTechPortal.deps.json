@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.0",
-    "signature": "24388aac8d1878a4125f8c88c8cdb0d68eb76eeb"
+    "signature": "7e1daeb3528b4b1f2efa77fc6e0795f761671ac7"
   },
   "compilationOptions": {
     "defines": [
@@ -16,8 +16,7 @@
     ".NETCoreApp,Version=v1.0": {
       "WTTechPortal/1.0.0": {
         "dependencies": {
-          "MySql.Data.Core": "7.0.4-ir-191",
-          "MySql.Data.EntityFrameworkCore": "7.0.4-ir-191",
+          "SapientGuardian.EntityFrameworkCore.MySql": "7.1.9",
           "System.ComponentModel.Annotations": "4.3.0",
           "Microsoft.AspNetCore.Http.Abstractions": "1.1.0",
           "Microsoft.ApplicationInsights.AspNetCore": "1.0.2",
@@ -46,37 +45,14 @@
           "System.Text.Encoding.Extensions": "4.3.0",
           "MailKit": "1.10.1",
           "Microsoft.Extensions.Caching.Memory": "1.1.0",
-          "Microsoft.AspNetCore.Session": "1.1.0"
+          "Microsoft.AspNetCore.Session": "1.1.0",
+          "Microsoft.EntityFrameworkCore": "1.1.0"
         },
         "runtime": {
           "WTTechPortal.dll": {}
         },
         "compile": {
           "WTTechPortal.dll": {}
-        }
-      },
-      "Google.Protobuf/3.0.0-beta4": {
-        "dependencies": {
-          "System.Collections": "4.3.0",
-          "System.Diagnostics.Debug": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.IO": "4.3.0",
-          "System.Linq": "4.3.0",
-          "System.Linq.Expressions": "4.3.0",
-          "System.ObjectModel": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Reflection.Extensions": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Text.Encoding": "4.3.0",
-          "System.Text.RegularExpressions": "4.3.0",
-          "System.Threading": "4.3.0"
-        },
-        "runtime": {
-          "lib/netstandard1.0/Google.Protobuf.dll": {}
-        },
-        "compile": {
-          "lib/netstandard1.0/Google.Protobuf.dll": {}
         }
       },
       "MailKit/1.10.1": {
@@ -1774,56 +1750,6 @@
           "lib/netstandard1.3/MimeKit.dll": {}
         }
       },
-      "MySql.Data.Core/7.0.4-ir-191": {
-        "dependencies": {
-          "Google.Protobuf": "3.0.0-beta4",
-          "Microsoft.Extensions.Configuration.Json": "1.1.0",
-          "NETStandard.Library": "1.6.1",
-          "System.Collections.NonGeneric": "4.3.0",
-          "System.ComponentModel": "4.3.0",
-          "System.ComponentModel.Annotations": "4.3.0",
-          "System.ComponentModel.Primitives": "4.3.0",
-          "System.ComponentModel.TypeConverter": "4.3.0",
-          "System.Data.Common": "4.3.0",
-          "System.Data.SqlClient": "4.3.0",
-          "System.Diagnostics.Process": "4.1.0",
-          "System.Diagnostics.TextWriterTraceListener": "4.0.0",
-          "System.IO.Compression": "4.3.0",
-          "System.IO.FileSystem.Primitives": "4.3.0",
-          "System.IO.MemoryMappedFiles": "4.0.0",
-          "System.IO.Pipes": "4.3.0",
-          "System.Linq.Expressions": "4.3.0",
-          "System.Net.NameResolution": "4.3.0",
-          "System.Net.Security": "4.3.0",
-          "System.Net.Sockets": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Reflection.TypeExtensions": "4.3.0",
-          "System.Security.Principal.Windows": "4.3.0",
-          "System.Text.Encoding.CodePages": "4.3.0",
-          "System.Threading.ThreadPool": "4.3.0",
-          "System.Threading.Timer": "4.3.0"
-        },
-        "runtime": {
-          "lib/netstandard1.6/MySql.Data.Core.dll": {}
-        },
-        "compile": {
-          "lib/netstandard1.6/MySql.Data.Core.dll": {}
-        }
-      },
-      "MySql.Data.EntityFrameworkCore/7.0.4-ir-191": {
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore": "1.1.0",
-          "Microsoft.EntityFrameworkCore.Relational": "1.1.0",
-          "MySql.Data.Core": "7.0.4-ir-191",
-          "NETStandard.Library": "1.6.1"
-        },
-        "runtime": {
-          "lib/netstandard1.6/MySql.Data.EntityFrameworkCore.dll": {}
-        },
-        "compile": {
-          "lib/netstandard1.6/MySql.Data.EntityFrameworkCore.dll": {}
-        }
-      },
       "NETStandard.Library/1.6.1": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -2295,6 +2221,63 @@
           }
         }
       },
+      "SapientGuardian.EntityFrameworkCore.MySql/7.1.9": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "1.1.0",
+          "Microsoft.EntityFrameworkCore.Relational": "1.1.0",
+          "NETStandard.Library": "1.6.1",
+          "SapientGuardian.MySql.Data": "6.9.813",
+          "System.Linq": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/SapientGuardian.EntityFrameworkCore.MySql.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.3/SapientGuardian.EntityFrameworkCore.MySql.dll": {}
+        }
+      },
+      "SapientGuardian.MySql.Data/6.9.813": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.3.0",
+          "Microsoft.Extensions.PlatformAbstractions": "1.1.0",
+          "System.Collections": "4.3.0",
+          "System.Collections.NonGeneric": "4.3.0",
+          "System.Collections.Specialized": "4.3.0",
+          "System.ComponentModel.TypeConverter": "4.3.0",
+          "System.Console": "4.3.0",
+          "System.Data.Common": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Diagnostics.TraceSource": "4.0.0",
+          "System.Diagnostics.Tracing": "4.3.0",
+          "System.IO.FileSystem": "4.3.0",
+          "System.Linq": "4.3.0",
+          "System.Net.NameResolution": "4.3.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.Security": "4.3.0",
+          "System.Net.Sockets": "4.3.0",
+          "System.Reflection": "4.3.0",
+          "System.Reflection.Extensions": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Resources.Writer": "4.0.0",
+          "System.Runtime.InteropServices": "4.3.0",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.3.0",
+          "System.Runtime.Serialization.Primitives": "4.3.0",
+          "System.Security.Cryptography.Algorithms": "4.3.0",
+          "System.Security.Cryptography.Primitives": "4.3.0",
+          "System.Security.Cryptography.X509Certificates": "4.3.0",
+          "System.Text.Encoding": "4.3.0",
+          "System.Text.Encoding.Extensions": "4.3.0",
+          "System.Text.RegularExpressions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Timer": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/SapientGuardian.MySql.Data.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.3/SapientGuardian.MySql.Data.dll": {}
+        }
+      },
       "System.AppContext/4.3.0": {
         "dependencies": {
           "System.Runtime": "4.3.0"
@@ -2397,6 +2380,9 @@
         },
         "runtime": {
           "lib/netstandard1.3/System.Collections.Specialized.dll": {}
+        },
+        "compile": {
+          "ref/netstandard1.3/System.Collections.Specialized.dll": {}
         }
       },
       "System.ComponentModel/4.3.0": {
@@ -2601,22 +2587,6 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Diagnostics.StackTrace.dll": {}
-        }
-      },
-      "System.Diagnostics.TextWriterTraceListener/4.0.0": {
-        "dependencies": {
-          "System.Diagnostics.TraceSource": "4.0.0",
-          "System.Globalization": "4.3.0",
-          "System.IO": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Threading": "4.3.0"
-        },
-        "runtime": {
-          "lib/netstandard1.3/System.Diagnostics.TextWriterTraceListener.dll": {}
-        },
-        "compile": {
-          "ref/netstandard1.3/System.Diagnostics.TextWriterTraceListener.dll": {}
         }
       },
       "System.Diagnostics.Tools/4.3.0": {
@@ -2908,9 +2878,6 @@
             "rid": "win",
             "assetType": "runtime"
           }
-        },
-        "compile": {
-          "ref/netstandard1.3/System.IO.Pipes.dll": {}
         }
       },
       "System.Linq/4.3.0": {
@@ -3341,6 +3308,22 @@
         },
         "compile": {
           "ref/netstandard1.0/System.Resources.ResourceManager.dll": {}
+        }
+      },
+      "System.Resources.Writer/4.0.0": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Text.Encoding": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/System.Resources.Writer.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.3/System.Resources.Writer.dll": {}
         }
       },
       "System.Runtime/4.3.0": {
@@ -4341,11 +4324,6 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Google.Protobuf/3.0.0-beta4": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-uBij/IkxC5L5Rla0xoRQTk+kPb4SkgOkbelsJcBMl6p0GsJ75h6S9zf6LsoOfh4bWRPlrK7eUHKpAKul0P6omQ=="
-    },
     "MailKit/1.10.1": {
       "type": "package",
       "serviceable": true,
@@ -4911,16 +4889,6 @@
       "serviceable": true,
       "sha512": "sha512-aYKyFJAic0GLfXvRQYEowhv4ZmibwhwpsEK1B0mlkGsSRbnR94yFBhLbal5D6qgJEpEdDBZJOuInICEEwEfN0w=="
     },
-    "MySql.Data.Core/7.0.4-ir-191": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-pVCkGOAqfUXl8Spf96vOSN8N+lweEyj0S4+YJJGj/8YCF8QocwmgeSdYRXG35rO7Pz1qQZlO0dlRYoTWwU5K0g=="
-    },
-    "MySql.Data.EntityFrameworkCore/7.0.4-ir-191": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-jgt3g7u+sAQV6uVqy0TVZFTrrLJTju6qoE+DCne9pOOgl+NDrz/s5iy45GNCHyCGO5Dn5vWtOwCG0RdpKG0gTA=="
-    },
     "NETStandard.Library/1.6.1": {
       "type": "package",
       "serviceable": true,
@@ -5111,6 +5079,16 @@
       "serviceable": true,
       "sha512": "sha512-4cXRTIcttvIreAoqK/5hzTtzepeggac+m5A0rzH+9zLtnFh2J0rLuGeJR4KjNLyKqPzO0kjqrs5lkRJEKX8HAA=="
     },
+    "SapientGuardian.EntityFrameworkCore.MySql/7.1.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-m2r+FUneI/u74LPUoXKfUFXrubzGSMNu0q8LMr5XIz4jgWg7kwcfflXYYmD+ZGdtLP5tzww3airEKo4cloCynA=="
+    },
+    "SapientGuardian.MySql.Data/6.9.813": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9umAXTPXeO66iSThDL7mOB3cDD1zu3N5Kl4X/1jLLJJZVtEAtpOCeGXSGG99u6On9lZKSLEjEC7EJ+YBIGWyCw=="
+    },
     "System.AppContext/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -5200,11 +5178,6 @@
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-BiHg0vgtd35/DM9jvtaC1eKRpWZxr0gcQd643ABG7GnvSlf5pOkY2uyd42mMOJoOmKvnpNj0F4tuoS1pacTwYw=="
-    },
-    "System.Diagnostics.TextWriterTraceListener/4.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-w36Dr8yKy8xP150qPANe7Td+/zOI3G62ImRcHDIEW+oUXUuTKZHd4DHmqRx5+x8RXd85v3tXd1uhNTfsr+yxjA=="
     },
     "System.Diagnostics.Tools/4.3.0": {
       "type": "package",
@@ -5390,6 +5363,11 @@
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-/zrcPkkWdZmI4F92gL/TPumP98AVDu/Wxr3CSJGQQ+XN6wbRZcyfSKVoPo17ilb3iOr0cCRqJInGwNMolqhS8A=="
+    },
+    "System.Resources.Writer/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Hz+ZS81dVSNy93YyJhhL3GwzmMhfcQ8FbUooAt9MO4joIe0vPM4gclv0C82ko1tuN/Kw6CvZFLYkgk6n9xvEkg=="
     },
     "System.Runtime/4.3.0": {
       "type": "package",

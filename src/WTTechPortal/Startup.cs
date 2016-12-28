@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using WTTechPortal.Data;
 using WTTechPortal.Models;
 using WTTechPortal.Services;
-using MySQL.Data.EntityFrameworkCore.Extensions;
+using MySQL.Data.Entity.Extensions;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Http;
 
@@ -50,9 +50,9 @@ namespace WTTechPortal
             services.AddApplicationInsightsTelemetry(Configuration);
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+                options.UseMySQL(Configuration.GetConnectionString("IdentityDBConnection")));
+            
+            services.AddIdentity<ApplicationUser, WTIdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             services.AddDbContext<WttechportalDbContext>(options =>

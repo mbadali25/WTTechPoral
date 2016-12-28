@@ -9,14 +9,20 @@ using Microsoft.Extensions.Logging;
 using WTTechPortal.Models;
 using WTTechPortal.Models.ManageViewModels;
 using WTTechPortal.Services;
+using WTTechPortal.Data;
+using WTTechPortal.Models.Login;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WTTechPortal.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<WTIdentityRole> _roleManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
@@ -24,12 +30,16 @@ namespace WTTechPortal.Controllers
         public ManageController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
+        RoleManager<WTIdentityRole> roleManager,
+        ApplicationDbContext context,
         IEmailSender emailSender,
         ISmsSender smsSender,
         ILoggerFactory loggerFactory)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
+            _context = context;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
@@ -84,6 +94,8 @@ namespace WTTechPortal.Controllers
             }
             return RedirectToAction(nameof(ManageLogins), new { Message = message });
         }
+
+
 
         //
         // GET: /Manage/AddPhoneNumber
@@ -239,6 +251,123 @@ namespace WTTechPortal.Controllers
         }
 
         //
+
+        public async Task<IActionResult> UsersIndex()
+        {
+
+
+
+
+            /*     var newlist = (from userro in _context.aspnetuserroles
+                                join userli in _context.aspnetusers on userro.UserId equals userli.Id
+                                join roleli in _context.aspnetroles on userro.RoleId equals roleli.Id
+                                select new aspnetuserroles()
+                                {
+                                    UserId = userro.UserId,
+                                    RoleId = userro.RoleId,
+                                    UserName = userli.UserName,
+                                    FirstName = userli.FirstName,
+                                    LastName = userli.LastName,
+                                    Email = userli.Email,
+                                    RoleName = roleli.Name
+
+                                }
+                               ).ToListAsync();*/
+
+            //return View(await newlist);
+            return View();
+        }
+
+        public async Task<IActionResult> UsersEdit(string id)
+        {
+
+
+
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            /*var newlist = await (from userro in _context.aspnetuserroles
+                                 join userli in _context.aspnetusers on userro.UserId equals userli.Id
+                                 join roleli in _context.aspnetroles on userro.RoleId equals roleli.Id
+                                 
+                                 select new aspnetuserroles()
+                                 {
+                                     UserId = userro.UserId,
+                                     RoleId = userro.RoleId,
+                                     UserName = userli.UserName,
+                                     FirstName = userli.FirstName,
+                                     LastName = userli.LastName,
+                                     Email = userli.Email
+                                     
+
+                                 }
+                          ).SingleOrDefaultAsync(x => x.UserId == id);
+
+
+            if (newlist == null)
+            {
+                return NotFound();
+            }
+            var rolelist = _context.aspnetroles.OrderBy(c => c.Name).Select(x => new { Id = x.Id, Value = x.Name });
+            ViewBag.rolelist = new SelectList(rolelist, "Id", "Value");
+
+
+            return View(newlist);*/
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UsersEdit(string id, [Bind("UserId,RoleId")] aspnetuserroles aspnetuserroles)
+        {
+
+
+
+           if (id != aspnetuserroles.UserId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    _context.Update(aspnetuserroles);
+                    await _context.SaveChangesAsync();
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!aspuserroleslistexist(aspnetuserroles.UserId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+
+
+                return RedirectToAction("UsersIndex");
+            }
+
+
+
+            return View(aspnetuserroles);
+        }
+
+
+        private bool aspuserroleslistexist(string id)
+        {
+            return _context.aspnetuserroles.Any(e => e.UserId == id);
+        }
+
         // GET: /Manage/SetPassword
         [HttpGet]
         public IActionResult SetPassword()
@@ -358,3 +487,4 @@ namespace WTTechPortal.Controllers
         #endregion
     }
 }
+

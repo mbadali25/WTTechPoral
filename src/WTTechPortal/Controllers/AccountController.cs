@@ -11,30 +11,34 @@ using Microsoft.Extensions.Logging;
 using WTTechPortal.Models;
 using WTTechPortal.Models.AccountViewModels;
 using WTTechPortal.Services;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using WTTechPortal.Data;
 
 namespace WTTechPortal.Controllers
 {
     [Authorize]
+
     public class AccountController : Controller
     {
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
-        private readonly ISmsSender _smsSender;
-        private readonly ILogger _logger;
+        private readonly RoleManager<WTIdentityRole> _roleManager;
+        
 
-        public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender,
-            ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+        //  private readonly IEmailSender _emailSender;
+        //   private readonly ISmsSender _smsSender;
+        //private readonly ILogger _logger;
+
+        public AccountController(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager,RoleManager<WTIdentityRole> roleManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
-            _smsSender = smsSender;
-            _logger = loggerFactory.CreateLogger<AccountController>();
+            //_emailSender = emailSender;
+           // _smsSender = smsSender;
+          //  _logger = loggerFactory.CreateLogger<AccountController>();
+            _roleManager = roleManager;
+            _context = context;
         }
 
         //
@@ -43,6 +47,7 @@ namespace WTTechPortal.Controllers
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
+            
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
@@ -59,10 +64,10 @@ namespace WTTechPortal.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation(1, "User logged in.");
+                    //_logger.LogInformation(1, "User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -71,7 +76,7 @@ namespace WTTechPortal.Controllers
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning(2, "User account locked out.");
+                    //_logger.LogWarning(2, "User account locked out.");
                     return View("Lockout");
                 }
                 else
@@ -85,46 +90,87 @@ namespace WTTechPortal.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/Register
         [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Register(string returnUrl = null)
+        [Authorize(Roles = "Administrator")]
+        public IActionResult CreateRole(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
-        //
-        // POST: /Account/Register
-        [HttpPost]
-        [AllowAnonymous]
+        [HttpPost]       
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        public  IActionResult CreateRole(WTIdentityRole rolemodel, string returnUrl = null)
         {
+
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                if (!_roleManager.RoleExistsAsync(rolemodel.Name).Result)
                 {
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
-                    // Send an email with this link
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
-                    //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation(3, "User created a new account with password.");
+                    WTIdentityRole role = new WTIdentityRole();
+                    role.Name = rolemodel.Name;
+                    role.Description = rolemodel.Description;
+                    IdentityResult roleResult = _roleManager.
+                    CreateAsync(role).Result;
+                    if (!roleResult.Succeeded)
+                    {
+                        ModelState.AddModelError("",
+                         "Error while creating role!");
+                        return View(rolemodel);
+                    }
                     return RedirectToLocal(returnUrl);
                 }
-                AddErrors(result);
-            }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            }
+            return View(rolemodel);
         }
+
+        //
+        // GET: /Account/Register
+        [HttpGet]
+        [Authorize(Roles = "Administrator")]
+        public IActionResult Register(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            var rolelist = _context.aspnetroles.OrderBy(c => c.Name).Select(x => new { Id = x.Name, Value = x.Name });
+            ViewBag.rolelist = new SelectList(rolelist, "Id", "Value");
+            return View();
+        }
+
+        //
+        // POST: /Account/Register
+
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        {
+           ViewData["ReturnUrl"] = returnUrl;
+
+
+
+            ApplicationUser user = new ApplicationUser();
+            user.UserName = model.UserName;
+            user.Email = model.Email;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+
+            IdentityResult result = _userManager.CreateAsync
+            (user, model.Password).Result;
+
+            if (result.Succeeded)
+            {
+                
+
+                _userManager.AddToRoleAsync(user,model.RoleName).Wait();
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return RedirectToLocal(returnUrl);
+            }
+        
+            return View(model);
+    }
 
         //
         // POST: /Account/LogOff
@@ -133,7 +179,7 @@ namespace WTTechPortal.Controllers
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
-            _logger.LogInformation(4, "User logged out.");
+            //_logger.LogInformation(4, "User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
@@ -152,7 +198,7 @@ namespace WTTechPortal.Controllers
 
         //
         // GET: /Account/ExternalLoginCallback
-        [HttpGet]
+       [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
@@ -171,7 +217,7 @@ namespace WTTechPortal.Controllers
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
             if (result.Succeeded)
             {
-                _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
+              //  _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
                 return RedirectToLocal(returnUrl);
             }
             if (result.RequiresTwoFactor)
@@ -215,7 +261,7 @@ namespace WTTechPortal.Controllers
                     if (result.Succeeded)
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
+                        //_logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
                         return RedirectToLocal(returnUrl);
                     }
                 }
@@ -379,11 +425,11 @@ namespace WTTechPortal.Controllers
             var message = "Your security code is: " + code;
             if (model.SelectedProvider == "Email")
             {
-                await _emailSender.SendEmailAsync(await _userManager.GetEmailAsync(user), "Security Code", message);
+                //await _emailSender.SendEmailAsync(await _userManager.GetEmailAsync(user), "Security Code", message);
             }
             else if (model.SelectedProvider == "Phone")
             {
-                await _smsSender.SendSmsAsync(await _userManager.GetPhoneNumberAsync(user), message);
+                //await _smsSender.SendSmsAsync(await _userManager.GetPhoneNumberAsync(user), message);
             }
 
             return RedirectToAction(nameof(VerifyCode), new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
@@ -426,7 +472,7 @@ namespace WTTechPortal.Controllers
             }
             if (result.IsLockedOut)
             {
-                _logger.LogWarning(7, "User account locked out.");
+                //_logger.LogWarning(7, "User account locked out.");
                 return View("Lockout");
             }
             else
