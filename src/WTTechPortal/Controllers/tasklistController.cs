@@ -271,6 +271,7 @@ namespace WTTechPortal.Controllers
         }
 
         // GET: tasklist/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -292,6 +293,7 @@ namespace WTTechPortal.Controllers
 
 // POST: tasklist/Delete/5
 [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
