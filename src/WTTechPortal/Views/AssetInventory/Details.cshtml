@@ -1,0 +1,66 @@
+@model WTTechPortal.Models.Inventory.assetinventory
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>assetinventory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.assetid)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.assetid)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.cpucores)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.cpucores)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.cpumodel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.cpumodel)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.cpuspd)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.cpuspd)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.hddsize)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.hddsize)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.memory)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.memory)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.model)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.model)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.notes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.notes)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

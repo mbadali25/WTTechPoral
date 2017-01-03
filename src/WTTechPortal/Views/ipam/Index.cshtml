@@ -1,0 +1,82 @@
+@model Sakura.AspNetCore.IPagedList<WTTechPortal.Models.IPAM.ipam>
+@*
+@model IPagedList<WTTechPortal.Models.IPAM.ipam>
+    *@
+@{
+    ViewData["Title"] = "IP Address Management";
+}
+@{
+    SelectList statelist = ViewBag.statelist;
+
+}
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Index", "ipam", FormMethod.Get))
+{
+    <text>Filter By IP or HostName: </text> @Html.TextBox("searchstring") <br/><br />
+    <text>Filter By State: </text> @Html.DropDownList("state", statelist, "Show All")<br /><br />
+
+    <input type="submit" value="Search" />
+}
+
+<div id="results">   
+    Total Results :  @ViewBag.totalresults <br/>
+    Total Available IPs :  @ViewBag.availableresults <br />
+    Total Used IPs :  @ViewBag.usedresults <br />
+</div>
+
+
+
+@Html.ActionLink("Reset Filters", "Index")
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                IP
+            </th>
+            <th>
+                HostName
+            </th>
+            <th>
+                Ping
+            </th>
+            <th>
+                Ports
+            </th>
+            <th>
+                State
+            </th>
+            <th>
+                Date
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.ip
+            </td>
+            <td>
+                @item.hostname
+            </td>
+            <td>
+                @item.ping
+            </td>
+            <td>
+                @item.ports
+            </td>
+            <td>
+               @item.state
+            </td>
+            <td>
+                @item.date
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>
+<pager source="Model" />

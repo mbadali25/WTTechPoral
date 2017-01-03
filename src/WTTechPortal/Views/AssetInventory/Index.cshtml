@@ -1,0 +1,76 @@
+@model IEnumerable<WTTechPortal.Models.Inventory.assetinventory>
+
+@{
+    ViewData["Title"] = "Asset Inventory";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.assetid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cpucores)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cpumodel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cpuspd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hddsize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.memory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.notes)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.assetid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cpucores)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cpumodel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cpuspd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hddsize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.memory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.notes)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |               
+                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

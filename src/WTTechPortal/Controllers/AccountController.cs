@@ -509,6 +509,13 @@ namespace WTTechPortal.Controllers
             }
         }
 
+
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         #endregion
     }
 }

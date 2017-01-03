@@ -15,6 +15,12 @@ using WTTechPortal.Services;
 using MySQL.Data.Entity.Extensions;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Http;
+using WebApiContrib.Core.Formatter.Csv;
+using Sakura.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
+
+
+
 
 namespace WTTechPortal
 {
@@ -46,7 +52,8 @@ namespace WTTechPortal
         public void  ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-          
+            var csvFormatterOptions = new CsvFormatterOptions();
+            csvFormatterOptions.CsvDelimiter = (',').ToString();
             services.AddApplicationInsightsTelemetry(Configuration);
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -56,9 +63,10 @@ namespace WTTechPortal
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             services.AddDbContext<WttechportalDbContext>(options =>
-            options.UseMySQL(Configuration.GetConnectionString("MYSQLConnection")));
+            options.UseMySQL(Configuration.GetConnectionString("MYSQLConnection"), b => b.MigrationsAssembly("ImportExportLocalization")));
 
-            
+
+
 
             services.AddMemoryCache();
             services.AddSession(options => {
@@ -66,11 +74,24 @@ namespace WTTechPortal
                 options.CookieName = ".WTTechPortalSession";
                 options.CookieDomain = "wttechsolutions.com";
             });
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.InputFormatters.Add(new CsvInputFormatter(csvFormatterOptions));
+                options.OutputFormatters.Add(new CsvOutputFormatter(csvFormatterOptions ));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("csv", MediaTypeHeaderValue.Parse("text/csv"));
+            })
+            .AddCsvSerializerFormatters();
+
+            services.AddBootstrapPagerGenerator(options =>
+            {
+                // Use default pager options.
+                options.ConfigureDefault();
+            });
 
             //Enable Caching and Session
 
 
+            services.AddScoped<ValidateMimeMultipartContentFilter>();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();

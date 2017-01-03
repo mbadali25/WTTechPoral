@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity 
 @using WTTechPortal.Models
 
 @inject SignInManager<ApplicationUser> SignInManager
@@ -20,9 +20,37 @@
 @if (this.User.IsInRole("Administrator"))
 {
     <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li><a asp-area="" asp-controller="Account" asp-action="Register">Create User</a></li>
-            <li><a asp-area="" asp-controller="Account" asp-action="CreateRole">Create ROle</a></li>
+        <ul id="nav" class="nav navbar-nav navbar-right">
+
+            <li>
+                <a href="#">System Management</a>
+                <ul>
+                    <li>
+                        <a asp-area="" asp-controller="Account" asp-action="Register">Create User</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Account" asp-action="CreateRole">Create Role</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="asset_type" asp-action="Index">Manage Asset Types</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="asset_opertaingsystem" asp-action="Index">Manage Asset OS Types</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="asset_model" asp-action="Index">Manage Asset Model Types</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="asset_status" asp-action="Index">Manage Asset Status Types</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="org_list" asp-action="Index">Manage Orginzations</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="site_config" asp-action="Index">Site Configuration</a>
+                    </li>
+                </ul>
+            <li>
             <li>
                 <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)</a>
             </li>
@@ -31,6 +59,8 @@
             </li>
         </ul>
     </form>
+
+    
 }
 @if(!(this.User.Identity.IsAuthenticated))
 {

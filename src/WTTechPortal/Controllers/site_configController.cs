@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WTTechPortal.Data;
 using WTTechPortal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WTTechPortal.Controllers
+
 {
+    [Authorize]
     public class site_configController : Controller
     {
         private readonly WttechportalDbContext _context;
