@@ -23,28 +23,51 @@ namespace WTTechPortal.Controllers
         }
 
         // GET: AssetInventory
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? assetstatus, int? brand, int? opertaingsystem)
         {
-            var wttechportalDbContext = _context.assetinventory.Include(a => a.assettypes).Include(a => a.brands).Include(a => a.operatingsystems).Include(a => a.orginzation).Include(a => a.status);
+            var wttechportalDbContext = (from a in _context.assetinventory select a);
+
+            var modelist = _context.asset_model.OrderBy(c => c.id).Select(x => new { Id = x.id, Value = x.model });
+            var statuslist = _context.asset_status.OrderBy(c => c.id).Select(x => new { Id = x.id, Value = x.assetstatus });
+            var operatingsystemlist = _context.asset_opertaingsystem.OrderBy(c => c.id).Select(x => new { Id = x.id, Value = x.operatingsystem });
+            ViewBag.modelist = new SelectList(modelist, "Id", "Value");
+            ViewBag.statuslist = new SelectList(statuslist, "Id", "Value");
+            ViewBag.operatingsystemlist = new SelectList(operatingsystemlist, "Id", "Value");
+
+            // Resutls Count
+            ViewBag.totalassets = wttechportalDbContext.Count();
+            ViewBag.assetsready = wttechportalDbContext.Where(x => x.ready.Equals(1)).Count();
+            ViewBag.assetsreadyneedrepair = wttechportalDbContext.Where(x => x.ready.Equals(6)).Count();
+            ViewBag.assestsneedrepair = wttechportalDbContext.Where(x => x.ready.Equals(2)).Count();
+            ViewBag.assetsunchecked = wttechportalDbContext.Where(x => x.ready.Equals(5)).Count();
+            ViewBag.functionalneedos = wttechportalDbContext.Where(x => x.ready.Equals(3)).Count();
+            ViewBag.assetsnotusable = wttechportalDbContext.Where(x => x.ready.Equals(4)).Count();
+
+            // var wttechportalDbContext = _context.assetinventory.Include(a => a.assettypes).Include(a => a.brands).Include(a => a.operatingsystems).Include(a => a.orginzation).Include(a => a.status).OrderBy(a => a.ready);
+
+
+            if (assetstatus != null)
+            {
+                wttechportalDbContext = wttechportalDbContext.Where(a => a.ready.Equals(assetstatus));
+            }
+
+            if (brand != null)
+            {
+                wttechportalDbContext = wttechportalDbContext.Where(a => a.brand.Equals(brand));
+
+            }
+            if (opertaingsystem != null)
+            {
+                wttechportalDbContext = wttechportalDbContext.Where(a => a.operatingsystem.Equals(opertaingsystem));
+            }
+
+            wttechportalDbContext = wttechportalDbContext.Include(a => a.assettypes).Include(a => a.brands).Include(a => a.operatingsystems).Include(a => a.orginzation).Include(a => a.status).OrderBy(a => a.ready);
+
+            ViewBag.results = wttechportalDbContext.Count();
+
             return View(await wttechportalDbContext.ToListAsync());
         }
 
-        // GET: AssetInventory/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var assetinventory = await _context.assetinventory.SingleOrDefaultAsync(m => m.id == id);
-            if (assetinventory == null)
-            {
-                return NotFound();
-            }
-
-            return View(assetinventory);
-        }
 
         // GET: AssetInventory/Create
         public IActionResult Create()

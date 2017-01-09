@@ -6,9 +6,51 @@
 
 <h2>@ViewBag.Title</h2>
 
+
+
+@{
+    SelectList modelist = ViewBag.modelist;
+    SelectList statuslist = ViewBag.statuslist;
+    SelectList operatingsystemlist = ViewBag.operatingsystemlist;
+    string emailstatus = ViewBag.EmailStatus;
+}
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<p>
+    @using (Html.BeginForm("Index", "AssetInventory", FormMethod.Post))
+    {
+
+        <text>Filter By Brand: </text> @Html.DropDownList("brand", modelist, "Show All")<br />
+        <text>Filter By Status: </text> @Html.DropDownList("assetstatus", statuslist, "Show All")<br />
+        <text>Filter By Operating System: </text> @Html.DropDownList("opertaingsystem", operatingsystemlist, "Show All") <br />
+        
+
+        <input type="submit" value="Search" />
+    }
+
+
+
+
+
+    @Html.ActionLink("Reset Filters", "Index")
+
+
+</p>
+
+<div id="results">
+    Current Results :  @ViewBag.totalassets <br /> <br />
+    Total Assets :  @ViewBag.totalassets <br />
+    Total Assets Ready :  @ViewBag.assetsready <br />
+    Total Assets Ready that have damage :  @ViewBag.assetsreadyneedrepair <br />
+    Total Assets that Need Repaired :  @ViewBag.assestsneedrepair <br />
+    Total Assets that need an Operating System :  @ViewBag.functionalneedos <br />
+    Total Assets Unchecked :  @ViewBag.assetsunchecked <br />
+    Total Assets that are not usable :  @ViewBag.assetsnotusable <br />
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -32,6 +74,12 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.operatingsystem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ready)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.notes)
@@ -62,6 +110,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.operatingsystems.operatingsystem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status.assetstatus)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.notes)
