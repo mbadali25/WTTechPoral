@@ -65,13 +65,9 @@ $('table tr').each(function (index) {
     if (lastCol.indexOf("Unchecked") >= 0) {
         $(this).css("background-color", "#FFFFE0");
     }
-    if (lastCol.indexOf("Canceled") >= 0) {
-        $(this).css("background-color", "#FFF8DC");
-    }
+
     if (lastCol.indexOf("Not Usable - Parts Only") >= 0) {
         $(this).css("background-color", "#E6E6FA");
     }
-    if (lastCol.indexOf("New") >= 0) {
-        $(this).css("background-color", "#DCDCDC");
-    }
+
 });
