@@ -41,7 +41,7 @@ $('table tr').each(function (index) {
     }
 
 });
-/*
+
 $('table tr').each(function (index) {
     var lastCol = $(this).children("td").eq(8).text();
     if (lastCol.indexOf("Needs Repaired") >= 0) {
@@ -70,4 +70,4 @@ $('table tr').each(function (index) {
         $(this).css("background-color", "#E6E6FA");
     }
 
-});*/
+});
