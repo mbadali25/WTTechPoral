@@ -1,4 +1,7 @@
 ﻿// Write your Javascript code.
+
+
+
 $('table tr').each(function (index) {
     var lastCol = $(this).children("td").eq(2).text();
     if (lastCol.indexOf("Waiting on Business") >= 0) {

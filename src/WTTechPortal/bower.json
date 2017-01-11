@@ -5,7 +5,9 @@
     "bootstrap": "3.3.6",
     "jquery": "2.2.3",
     "jquery-validation": "1.15.0",
-    "jquery-validation-unobtrusive": "3.2.6"
+    "jquery-validation-unobtrusive": "3.2.6",
+    "jquery-ui": "1.11.4",
+    "datetimepicker": "2.5.3"
   },
   "resolutions": {
     "jquery": ">=1.8",

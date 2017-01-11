@@ -266,6 +266,7 @@ C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\org_lis
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\priority_selectController.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\site_configController.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\tasklistController.cs
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\workcodesController.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\assets\asset_modelController.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\assets\asset_opertaingsystemController.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\assets\asset_statusController.cs
@@ -286,6 +287,7 @@ C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\status_selec
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\tasklist.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\testmode.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\ValidateMimeMultipartContentFilter.cs
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\workcodes.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\WTIdentityRole.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\WTIdentityUser.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\AccountViewModels\ExternalLoginConfirmationViewModel.cs

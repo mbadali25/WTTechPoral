@@ -2,6 +2,7 @@
 
     @{
         ViewData["Title"] = "Task List";
+        Layout = "_Layout-Wide";
     }
 
 @{
@@ -60,8 +61,24 @@
                 <th>
                     @Html.DisplayNameFor(model => model.comments)
                 </th>
+                @if (this.User.IsInRole("Administrator"))
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.workcodes.workcode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.hours)
+                    </th>
+
+                }
+                <th>
+                    @Html.DisplayNameFor(model => model.desiredcompdate)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.completedate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.updateddate)
                 </th>
                 <th></th>
             </tr>
@@ -70,26 +87,41 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
+                    <td style="width: 14em">
                         @Html.DisplayFor(modelItem => item.task)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.actionitem)
                     </td>
-                    <td>
+                    <td style="width: 11em">
                         @Html.DisplayFor(modelItem => item.statuses.statusname)
                     </td>
-                    <td>
+                    <td style="width: 10em">
                         @Html.DisplayFor(modelItem => item.owners.ownername)
                     </td>
-                    <td>
+                    <td style="width: 6em">
                         @Html.DisplayFor(modelItem => item.prioritites.priorityname)
                     </td>
-                    <td>
+                    <td style="width: 15em">
                         @Html.DisplayFor(modelItem => item.comments)
                     </td>
-                    <td>
+@if (this.User.IsInRole("Administrator"))
+{
+                    <td style="width: 8em">
+                        @Html.DisplayFor(modelItem => item.workcodes.workcode)
+                    </td>
+                    <td style="width: 8em">
+                        @Html.DisplayFor(modelItem => item.hours)
+                    </td>
+}
+                    <td style="width: 13em">
+                        @Html.DisplayFor(modelItem => item.desiredcompdate)
+                    </td>
+                    <td style="width: 10em">
                         @Html.DisplayFor(modelItem => item.completedate)
+                    </td>
+                    <td style="width: 10em">
+                        @Html.DisplayFor(modelItem => item.updateddate)
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.id">Edit</a> 

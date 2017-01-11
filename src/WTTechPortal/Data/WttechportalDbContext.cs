@@ -33,6 +33,7 @@ namespace WTTechPortal.Data
 
         public DbSet<ipam> ipam { get; set; }
         public DbSet<hypervvms> hypervvms { get; set; }
+        public DbSet<workcodes> workcodes { get; set; }
 
         public WttechportalDbContext(DbContextOptions<WttechportalDbContext> options)
             : base(options)
@@ -47,6 +48,7 @@ namespace WTTechPortal.Data
 
 
         }
+        
         
     }
 }

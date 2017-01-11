@@ -62,7 +62,7 @@ namespace WTTechPortal.Controllers
             var list = (from a in _context.tasklist
                         select a );
 
-            list = list.Include(p => p.prioritites).Include(o => o.owners).Include(s => s.statuses).OrderBy( or => or.status);
+            list = list.Include(p => p.prioritites).Include(o => o.owners).Include(s => s.statuses).Include(s => s.workcodes).OrderBy( or => or.status);
 
             if (status != null)
             {
@@ -130,6 +130,8 @@ namespace WTTechPortal.Controllers
             var priorities = _context.priority_select.OrderBy(c => c.priorityid).Select(x => new { Id = x.priorityid, Value = x.priorityname });
             var statuslist = _context.status_select.OrderBy(c => c.statusid).Select(x => new { Id = x.statusid, Value = x.statusname });
             var ownerlist = _context.owner_select.OrderBy(c => c.ownerid).Select(x => new { Id = x.ownerid, Value = x.ownername });
+            var orglist = _context.org_list.OrderBy(c => c.id).Select(x => new { Id = x.id, Value = x.orgname });
+            ViewBag.orglist = new SelectList(orglist, "Id", "Value");
             ViewBag.priorities = new SelectList(priorities, "Id", "Value");
             ViewBag.statuslist = new SelectList(statuslist, "Id", "Value");
             ViewBag.ownerlist = new SelectList(ownerlist, "Id", "Value");
@@ -145,11 +147,20 @@ namespace WTTechPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,actionitem,comments,completedate,owner,priority,status,task")] tasklist tasklist)
+        public async Task<IActionResult> Create([Bind("id,actionitem,comments,completedate,owner,priority,status,hours,workcode,updateddate,desiredcompdate,org,task")] tasklist tasklist)
         {
             if (ModelState.IsValid)
             {
+
+
+                if (this.User.IsInRole("ANEWUsers"))
+                {
+                    tasklist.org = 1;
+                }
                 _context.Add(tasklist);
+
+
+
                 await _context.SaveChangesAsync();
                 //Setup Values from Database Prepare for Email
                 string taskitem = tasklist.task.ToString();
@@ -163,21 +174,21 @@ namespace WTTechPortal.Controllers
                 string taskpriority = _context.priority_select.Where(x => x.priorityid.Equals(taskpriorityint)).Select(s => s.priorityname).First();
 
                 string actionitem = tasklist.actionitem.ToString();
-                
 
-
+     
                 int smtpport = _context.site_config.Select(x => x.smtpport).First();
                 string smtpserver = _context.site_config.Select(x => x.smtpserver).First();
                 string smtpuser = _context.site_config.Select(x => x.smtpuser).First();
                 string smtppass = _context.site_config.Select(x => x.smtppassword).First();
                 string fromadd = _context.site_config.Select(x => x.sendasemail).First();
                 string adminadd = _context.site_config.Select(x => x.adminemail).First();
+                string compadd = _context.org_list.Where(x => x.id.Equals(tasklist.org)).Select(x => x.emailcontact).First();
                 string mailbody = "A New Task was Created with the Following Detaions<br/> <b>Task: </b>" + taskitem +"</br><b>Action Item: </b>" + actionitem + "<br/><b>Owner: </b>" + taskowner + "<br/><b>Status: </b>" + taskstatus + "<br/><b>Priority: </b>" + taskpriority;
                 string subject = "Create: A New Task was Created";
 
                 //var EmailConstruct = TaskSendEmail;
 
-                await SendEmail("Create", smtpuser, smtpserver, smtppass, fromadd, adminadd, mailbody, subject, smtpport, true, true);
+                await SendEmail("Create", smtpuser, smtpserver, smtppass, fromadd, adminadd, compadd, mailbody, subject, smtpport, true, true);
                 TempData["EmailStatus"] = HttpContext.Session.GetString("estatus");
 
                 return RedirectToAction("Index");
@@ -194,6 +205,7 @@ namespace WTTechPortal.Controllers
             }
 
             var tasklist = await _context.tasklist.SingleOrDefaultAsync(m => m.id == id);
+            
             if (tasklist == null)
             {
                 return NotFound();
@@ -201,9 +213,14 @@ namespace WTTechPortal.Controllers
             var priorities = _context.priority_select.OrderBy(c => c.priorityid).Select(x => new { Id = x.priorityid, Value = x.priorityname });
             var statuslist = _context.status_select.OrderBy(c => c.statusid).Select(x => new { Id = x.statusid, Value = x.statusname });
             var ownerlist = _context.owner_select.OrderBy(c => c.ownerid).Select(x => new { Id = x.ownerid, Value = x.ownername });
+            var workcodelist = _context.workcodes.OrderBy(c => c.id).Select(x => new { Id = x.id, Value = x.workcode });
+
             ViewBag.priorities = new SelectList(priorities, "Id", "Value");
             ViewBag.statuslist = new SelectList(statuslist, "Id", "Value");
             ViewBag.ownerlist = new SelectList(ownerlist, "Id", "Value");
+            ViewBag.workcodelist = new SelectList(workcodelist, "Id", "Value");
+
+
             return View(tasklist);
         }
 
@@ -213,7 +230,7 @@ namespace WTTechPortal.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         
-        public async Task<IActionResult> Edit(int id, [Bind("id,actionitem,comments,completedate,owner,priority,status,task")] tasklist tasklist)
+        public async Task<IActionResult> Edit(int id, [Bind("id,actionitem,comments,completedate,owner,priority,status,updateddate,desiredcompdate,org,hours,workcode,task")] tasklist tasklist)
         {
             if (id != tasklist.id)
             {
@@ -227,23 +244,24 @@ namespace WTTechPortal.Controllers
                     _context.Update(tasklist);
                     await _context.SaveChangesAsync();
                     string taskitem = _context.tasklist.Where(x => x.id.Equals(id)).Select(s => s.task).First();
-                                     
-                        
-                        
+                    int orgid = (_context.tasklist.Where(x => x.id.Equals(id)).Select(x => x.org).First());
 
-                        //Setup Values from Database Prepare for Email
-                        int smtpport = _context.site_config.Select(x => x.smtpport).First();
+
+
+                    //Setup Values from Database Prepare for Email
+                    int smtpport = _context.site_config.Select(x => x.smtpport).First();
                         string smtpserver = _context.site_config.Select(x => x.smtpserver).First();
                         string smtpuser = _context.site_config.Select(x => x.smtpuser).First();
                         string smtppass = _context.site_config.Select(x => x.smtppassword).First();
                         string fromadd = _context.site_config.Select(x => x.sendasemail).First();
-                        string adminadd = _context.site_config.Select(x => x.adminemail).First();
+                    string compadd = _context.org_list.Where(x => x.id.Equals(orgid)).Select(x => x.emailcontact).First();
+                    string adminadd = _context.site_config.Select(x => x.adminemail).First();
                         string mailbody = "Task: <b>" + taskitem + "</b>  : was updated on a Edit";
                         string subject = "Edit: Task was updated";
 
                     //var EmailConstruct = TaskSendEmail;
 
-                     await SendEmail("Edit", smtpuser, smtpserver, smtppass, fromadd, adminadd, mailbody, subject, smtpport, true, true);
+                     await SendEmail("Edit", smtpuser, smtpserver, smtppass, fromadd, compadd, adminadd, mailbody, subject, smtpport, true, true);
                     TempData["EmailStatus"] = HttpContext.Session.GetString("estatus");
                     
                         
@@ -309,16 +327,18 @@ namespace WTTechPortal.Controllers
         }
 
 
-        public async Task SendEmail(string action, string smtpuser, string smtpserver, string smtppass, string fromadd, string toadd, string mailbody, string subject, int smtpport, bool smtpauth, bool ssl)
+        public async Task SendEmail(string action, string smtpuser, string smtpserver, string smtppass, string fromadd, string toadd, string compadd, string mailbody, string subject, int smtpport, bool smtpauth, bool ssl)
         {
             string emailstatus = "";
             try
             {
                 var emailMessage = new MimeMessage();
-                
+
 
                 emailMessage.From.Add(new MailboxAddress(fromadd, fromadd));
                 emailMessage.To.Add(new MailboxAddress(toadd, toadd));
+                emailMessage.To.Add(new MailboxAddress(compadd, compadd));
+
                 emailMessage.Subject = subject;
                 emailMessage.Body = new TextPart("html") { Text = mailbody };
 

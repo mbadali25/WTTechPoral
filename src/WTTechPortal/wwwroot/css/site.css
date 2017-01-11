@@ -9,6 +9,12 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+.wide{
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 95%;
+}
+
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
 input,
@@ -148,4 +154,21 @@ textarea {
     padding-top:10px;
     padding-bottom:10px;
     float:right;
+}
+
+.container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse
+{
+    margin-right:-15px;
+    margin-left:-15px;
+}
+
+.table
+{
+    border: 1px solid black;
+    
+}
+
+th , td
+{
+    border: 1px solid black;
 }
