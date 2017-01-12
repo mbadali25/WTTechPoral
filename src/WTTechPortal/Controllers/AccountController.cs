@@ -21,6 +21,7 @@ namespace WTTechPortal.Controllers
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly WttechportalDbContext wttechcontext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<WTIdentityRole> _roleManager;
@@ -30,7 +31,7 @@ namespace WTTechPortal.Controllers
         //   private readonly ISmsSender _smsSender;
         //private readonly ILogger _logger;
 
-        public AccountController(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager,RoleManager<WTIdentityRole> roleManager, ApplicationDbContext context)
+        public AccountController(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager,RoleManager<WTIdentityRole> roleManager, ApplicationDbContext context, WttechportalDbContext _wttechcontext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -39,6 +40,7 @@ namespace WTTechPortal.Controllers
           //  _logger = loggerFactory.CreateLogger<AccountController>();
             _roleManager = roleManager;
             _context = context;
+            wttechcontext = _wttechcontext;
         }
 
         //
@@ -95,6 +97,8 @@ namespace WTTechPortal.Controllers
         public IActionResult CreateRole(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            var orglist = wttechcontext.org_list.OrderBy(c => c.id).Select(x => new { Id = x.id, Value = x.orgname });
+            ViewBag.orglist = new SelectList(orglist, "Id", "Value");
             return View();
         }
 
@@ -111,6 +115,7 @@ namespace WTTechPortal.Controllers
                     WTIdentityRole role = new WTIdentityRole();
                     role.Name = rolemodel.Name;
                     role.Description = rolemodel.Description;
+                    role.org = rolemodel.org;                  
                     IdentityResult roleResult = _roleManager.
                     CreateAsync(role).Result;
                     if (!roleResult.Succeeded)
@@ -121,7 +126,7 @@ namespace WTTechPortal.Controllers
                     }
                     return RedirectToLocal(returnUrl);
                 }
-
+                
             }
             return View(rolemodel);
         }

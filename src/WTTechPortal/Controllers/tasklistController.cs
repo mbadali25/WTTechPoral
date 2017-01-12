@@ -12,6 +12,8 @@ using WTTechPortal.Services;
 using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace WTTechPortal.Controllers
 {
@@ -19,25 +21,39 @@ namespace WTTechPortal.Controllers
     public class tasklistController : Controller
     {
         private readonly WttechportalDbContext _context;
-      
 
-        public tasklistController(WttechportalDbContext context)
+         //Getting User Information User Manager
+        private UserManager<ApplicationUser> _userManager;
+
+        //Getting Role Information Role Manager
+        private readonly RoleManager<WTIdentityRole> _roleManager;
+
+        public tasklistController(WttechportalDbContext context, UserManager<ApplicationUser> userManager, RoleManager<WTIdentityRole> roleManager)
         {
             _context = context;
-          
+            
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         // GET: tasklist
+        //Main Index for Tasklist Index  /tasklist
+        //The list Is filterable 
        public async Task<IActionResult> Index(int? id, int? status, int? owner , int? prioity, bool? closedcheck)
         {
+            // Building Select List for Filters
             var priorities = _context.priority_select.OrderBy(c => c.priorityid).Select(x => new { Id = x.priorityid, Value = x.priorityname });
             var statuslist = _context.status_select.OrderBy(c => c.statusid).Select(x => new { Id = x.statusid, Value = x.statusname });
             var ownerlist = _context.owner_select.OrderBy(c => c.ownerid).Select(x => new { Id = x.ownerid, Value = x.ownername });
+
+            // Storing List in View bags
             ViewBag.priorities = new SelectList(priorities, "Id", "Value");
             ViewBag.statuslist = new SelectList(statuslist, "Id", "Value");
             ViewBag.ownerlist = new SelectList(ownerlist, "Id", "Value");
             string EmailStatus = null;
-            
+
+
+
             //Handling Email Status TempData passed from Edit or Create
             if ((TempData["EmailStatus"]) != null)
             {
@@ -96,13 +112,12 @@ namespace WTTechPortal.Controllers
             return View(await list.ToListAsync());
         }
 
-        //Send Email
+        
 
 
 
         // GET: tasklist/Details/5
-
-
+        
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -135,6 +150,9 @@ namespace WTTechPortal.Controllers
             ViewBag.priorities = new SelectList(priorities, "Id", "Value");
             ViewBag.statuslist = new SelectList(statuslist, "Id", "Value");
             ViewBag.ownerlist = new SelectList(ownerlist, "Id", "Value");
+
+           
+
             return View();
             
         }
@@ -151,12 +169,16 @@ namespace WTTechPortal.Controllers
         {
             if (ModelState.IsValid)
             {
-
-
-                if (this.User.IsInRole("ANEWUsers"))
+                //Get Role Org Id form currnet User. If the user isn't an Administrator
+                if (!(this.User.IsInRole("Administrator")))
                 {
-                    tasklist.org = 1;
+                    var userid = (await _userManager.GetUserAsync(User));
+                    var role = (await _userManager.GetRolesAsync(userid)).First();
+                    int orgid = (await _roleManager.FindByNameAsync(role)).org;
+                    tasklist.org = orgid;
                 }
+
+
                 _context.Add(tasklist);
 
 
@@ -183,7 +205,9 @@ namespace WTTechPortal.Controllers
                 string fromadd = _context.site_config.Select(x => x.sendasemail).First();
                 string adminadd = _context.site_config.Select(x => x.adminemail).First();
                 string compadd = _context.org_list.Where(x => x.id.Equals(tasklist.org)).Select(x => x.emailcontact).First();
-                string mailbody = "A New Task was Created with the Following Detaions<br/> <b>Task: </b>" + taskitem +"</br><b>Action Item: </b>" + actionitem + "<br/><b>Owner: </b>" + taskowner + "<br/><b>Status: </b>" + taskstatus + "<br/><b>Priority: </b>" + taskpriority;
+                string mailbody = "A New Task was Created <br/> <b>Task: </b>" + taskitem +
+                    "<br/><b>Action Item: </b>" + actionitem + "<br/><b>Owner: </b>" + taskowner + "<br/><b>Status: </b>" 
+                    + taskstatus + "<br/><b>Priority: </b>" + taskpriority + "<br/><b>Desired Complete Date: </b>: " + tasklist.desiredcompdate;
                 string subject = "Create: A New Task was Created";
 
                 //var EmailConstruct = TaskSendEmail;
@@ -243,8 +267,24 @@ namespace WTTechPortal.Controllers
                 {
                     _context.Update(tasklist);
                     await _context.SaveChangesAsync();
+
+                    //Setup Values from Database Prepare for Email
+
                     string taskitem = _context.tasklist.Where(x => x.id.Equals(id)).Select(s => s.task).First();
                     int orgid = (_context.tasklist.Where(x => x.id.Equals(id)).Select(x => x.org).First());
+                    
+                    int taskownerint = tasklist.owner;
+                    string taskowner = _context.owner_select.Where(x => x.ownerid.Equals(taskownerint)).Select(s => s.ownername).First();
+
+                    int taskstatusint = tasklist.status;
+                    string taskstatus = _context.status_select.Where(x => x.statusid.Equals(taskstatusint)).Select(s => s.statusname).First();
+
+                    int taskpriorityint = tasklist.priority;
+                    string taskpriority = _context.priority_select.Where(x => x.priorityid.Equals(taskpriorityint)).Select(s => s.priorityname).First();
+
+                    
+
+                    string actionitem = tasklist.actionitem.ToString();
 
 
 
@@ -256,7 +296,10 @@ namespace WTTechPortal.Controllers
                         string fromadd = _context.site_config.Select(x => x.sendasemail).First();
                     string compadd = _context.org_list.Where(x => x.id.Equals(orgid)).Select(x => x.emailcontact).First();
                     string adminadd = _context.site_config.Select(x => x.adminemail).First();
-                        string mailbody = "Task: <b>" + taskitem + "</b>  : was updated on a Edit";
+
+                        string mailbody = "Task: <b>" + taskitem + "</b>  : was updated on a Edit <br/><br/><b>Current Action Item: </b>" 
+                        + actionitem + "<br/><b>Status: </b>" + taskstatus + "<br/><b>Owner: </b>" + taskowner + "<br/><b>Priority: </b>" + taskpriority
+                        + "<br/><b>Resolution: </b>" + tasklist.comments + "<br/><b>Desired Compelte Date: </b>" + tasklist.desiredcompdate.ToString().Substring(0, (tasklist.desiredcompdate.ToString().Length - 12)) + "<br/><b>Completed Date: </b>" + tasklist.completedate.ToString().Substring(0, (tasklist.completedate.ToString().Length - 12));
                         string subject = "Edit: Task was updated";
 
                     //var EmailConstruct = TaskSendEmail;

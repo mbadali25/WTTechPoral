@@ -13,5 +13,7 @@ namespace WTTechPortal.Models.Login
         public string ConcurrencyStamp { get; set; }
         public string Name { get; set; }
         public string NormalizedName { get; set; }
+
+        public int org { get; set; }
     }
 }

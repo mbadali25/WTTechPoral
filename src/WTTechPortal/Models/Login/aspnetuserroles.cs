@@ -13,5 +13,6 @@ namespace WTTechPortal.Models.Login
         [Key]
         public string RoleId { get; set; }
 
+
     }
 }
