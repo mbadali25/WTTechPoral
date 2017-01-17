@@ -1,0 +1,70 @@
+@model WTTechPortal.Models.tasklist
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tasklist</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.actionitem)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.actionitem)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.comments)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.comments)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.completedate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.completedate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.desiredcompdate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.desiredcompdate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.hours)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.hours)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.org)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.org)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.task)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.task)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.updateddate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.updateddate)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </form>
+</div>

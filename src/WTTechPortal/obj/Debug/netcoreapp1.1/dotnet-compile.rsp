@@ -258,6 +258,7 @@ C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\Account
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\AssetInventoryController.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\csvexportController.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\HomeController.cs
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\hoursController.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\hypervisorController.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\ImportExportController .cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Controllers\ipamController.cs
@@ -275,6 +276,7 @@ C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Data\ApplicationDbC
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Data\WttechportalDbContext.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\ApplicationUser.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\CsvImportDescription.cs
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\HoursSort.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\HyperVModels.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\hypervperf.cs
 C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\Models\hypervvms.cs

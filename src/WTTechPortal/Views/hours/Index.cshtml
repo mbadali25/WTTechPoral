@@ -1,0 +1,87 @@
+@model IEnumerable<WTTechPortal.Models.tasklist>
+
+@{
+    ViewData["Title"] = "Hours Overview";
+    Layout = "_Layout-Wide";
+}
+
+
+@{
+    SelectList yearlist = ViewBag.yearlist;
+    SelectList monthlist = ViewBag.monthlist;
+    var groupsitems = ViewBag.groups;
+    decimal hourcount = 0;
+
+}
+
+@using (Html.BeginForm("Index", "hours", FormMethod.Get))
+{
+
+   <text>Filter By Year: </text> @Html.DropDownList("year", yearlist, "Show All")<br />
+    <text>Filter By Month: </text> @Html.DropDownList("month", monthlist, "Show All")<br />
+
+
+    <input type="submit" value="Search" />
+}
+
+
+
+
+@Html.ActionLink("Reset Filters", "Index")
+
+<h2>Total Hours Overview</h2>
+
+
+    @foreach (var aitem in groupsitems)
+    {
+
+      <p>  <b>@Convert.ToString(aitem.Text) :</b> @Convert.ToString(aitem.Value) Hours </p>
+      hourcount = hourcount + Convert.ToDecimal(aitem.Value);
+    }
+
+    <b>Total Hours:</b> @Convert.ToString(hourcount) Hours <br/><br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.task)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.completedate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.workcodes.workcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.comments)
+            </th>
+
+           
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.task)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.completedate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.workcodes.workcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.comments)
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>

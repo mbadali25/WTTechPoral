@@ -146,12 +146,13 @@ namespace WTTechPortal.Controllers
             var statuslist = _context.status_select.OrderBy(c => c.statusid).Select(x => new { Id = x.statusid, Value = x.statusname });
             var ownerlist = _context.owner_select.OrderBy(c => c.ownerid).Select(x => new { Id = x.ownerid, Value = x.ownername });
             var orglist = _context.org_list.OrderBy(c => c.id).Select(x => new { Id = x.id, Value = x.orgname });
+            var workcodelist = _context.workcodes.OrderBy(c => c.id).Select(x => new { Id = x.id, Value = x.workcode });
             ViewBag.orglist = new SelectList(orglist, "Id", "Value");
             ViewBag.priorities = new SelectList(priorities, "Id", "Value");
             ViewBag.statuslist = new SelectList(statuslist, "Id", "Value");
             ViewBag.ownerlist = new SelectList(ownerlist, "Id", "Value");
+            ViewBag.workcodelist = new SelectList(workcodelist, "Id", "Value");
 
-           
 
             return View();
             
@@ -296,10 +297,21 @@ namespace WTTechPortal.Controllers
                         string fromadd = _context.site_config.Select(x => x.sendasemail).First();
                     string compadd = _context.org_list.Where(x => x.id.Equals(orgid)).Select(x => x.emailcontact).First();
                     string adminadd = _context.site_config.Select(x => x.adminemail).First();
+                    string compdate = "";
+                    string desirdate = "";
+                    if (tasklist.completedate != null)
+                    {
+                        compdate = tasklist.completedate.ToString().Substring(0, (tasklist.completedate.ToString().Length - 12));
+                    }
 
-                        string mailbody = "Task: <b>" + taskitem + "</b>  : was updated on a Edit <br/><br/><b>Current Action Item: </b>" 
+                    if (tasklist.desiredcompdate != null)
+                    {
+                        desirdate = tasklist.desiredcompdate.ToString().Substring(0, (tasklist.desiredcompdate.ToString().Length - 12));
+                    }
+
+                    string mailbody = "Task: <b>" + taskitem + "</b>  : was updated on a Edit <br/><br/><b>Current Action Item: </b>" 
                         + actionitem + "<br/><b>Status: </b>" + taskstatus + "<br/><b>Owner: </b>" + taskowner + "<br/><b>Priority: </b>" + taskpriority
-                        + "<br/><b>Resolution: </b>" + tasklist.comments + "<br/><b>Desired Compelte Date: </b>" + tasklist.desiredcompdate.ToString().Substring(0, (tasklist.desiredcompdate.ToString().Length - 12)) + "<br/><b>Completed Date: </b>" + tasklist.completedate.ToString().Substring(0, (tasklist.completedate.ToString().Length - 12));
+                        + "<br/><b>Resolution: </b>" + tasklist.comments + "<br/><b>Desired Compelte Date: </b>" + desirdate + "<br/><b>Completed Date: </b>" + compdate;
                         string subject = "Edit: Task was updated";
 
                     //var EmailConstruct = TaskSendEmail;
