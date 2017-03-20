@@ -32,19 +32,19 @@
             @Html.DisplayNameFor(model => model.owner)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.owner)
+            @Html.DisplayFor(model => model.owners.ownername)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.priority)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.priority)
+            @Html.DisplayFor(model => model.prioritites.priorityname)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.status)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.status)
+            @Html.DisplayFor(model => model.statuses.statusname)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.task)
@@ -54,6 +54,42 @@
         </dd>
     </dl>
 </div>
+
+<h3>Updates</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Update Info
+            </th>
+            <th>
+                Update Date
+            </th>
+            <th>
+                Updated By
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.tasklistupdates)
+        {
+            <tr>
+                <td>
+                    @item.updatetext
+                </td>
+                <td>
+                    @item.createdate
+                </td>
+                <td>
+                    @item.updateby
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
     <a asp-action="Index">Back to List</a>

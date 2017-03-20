@@ -81,8 +81,10 @@ namespace WTTechPortal.Models
         public status_select statuses { get; set; }
         [ForeignKey("owner")]
         
-        
         public owner_select owners { get; set; }
+
+        [ForeignKey("id")]
+        public tasklist_updates ticketupdates { get; set; }
 
 
 

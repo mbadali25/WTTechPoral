@@ -28,12 +28,17 @@ namespace WTTechPortal.Controllers
         //Getting Role Information Role Manager
         private readonly RoleManager<WTIdentityRole> _roleManager;
 
+               
+        
+        
+
         public tasklistController(WttechportalDbContext context, UserManager<ApplicationUser> userManager, RoleManager<WTIdentityRole> roleManager)
         {
-            _context = context;
-            
+            _context = context;           
             _userManager = userManager;
             _roleManager = roleManager;
+
+
         }
 
         // GET: tasklist
@@ -52,8 +57,7 @@ namespace WTTechPortal.Controllers
             ViewBag.ownerlist = new SelectList(ownerlist, "Id", "Value");
             string EmailStatus = null;
 
-
-
+            
             //Handling Email Status TempData passed from Edit or Create
             if ((TempData["EmailStatus"]) != null)
             {
@@ -79,7 +83,7 @@ namespace WTTechPortal.Controllers
                         select a );
 
             list = list.Include(p => p.prioritites).Include(o => o.owners).Include(s => s.statuses).Include(s => s.workcodes).OrderBy( or => or.status);
-
+            
             if (status != null)
             {
                 if (closedcheck == true)
@@ -125,12 +129,17 @@ namespace WTTechPortal.Controllers
                 return NotFound();
             }
 
-            var tasklist = await _context.tasklist.SingleOrDefaultAsync(m => m.id == id);
+            var tasklist = await _context.tasklist.Include(p => p.prioritites).Include(o => o.owners).Include(s => s.statuses).Include(s => s.workcodes).OrderBy(or => or.status).SingleOrDefaultAsync(m => m.id == id);
             if (tasklist == null)
             {
                 return NotFound();
             }
+           
+            
+            
+            
 
+            ViewBag.tasklistupdates = _context.tasklist_updates.Where(x => x.ticketid.Equals(id)).OrderByDescending(x => x.id);
             return View(tasklist);
         }
 
@@ -146,7 +155,7 @@ namespace WTTechPortal.Controllers
             var statuslist = _context.status_select.OrderBy(c => c.statusid).Select(x => new { Id = x.statusid, Value = x.statusname });
             var ownerlist = _context.owner_select.OrderBy(c => c.ownerid).Select(x => new { Id = x.ownerid, Value = x.ownername });
             var orglist = _context.org_list.OrderBy(c => c.id).Select(x => new { Id = x.id, Value = x.orgname });
-            var workcodelist = _context.workcodes.OrderBy(c => c.id).Select(x => new { Id = x.id, Value = x.workcode });
+            var workcodelist = _context.workcodes.OrderBy(c => c.id).Select(x => new { Id = x.id, Value = x.workcode });           
             ViewBag.orglist = new SelectList(orglist, "Id", "Value");
             ViewBag.priorities = new SelectList(priorities, "Id", "Value");
             ViewBag.statuslist = new SelectList(statuslist, "Id", "Value");
@@ -166,7 +175,7 @@ namespace WTTechPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,actionitem,comments,completedate,owner,priority,status,hours,workcode,updateddate,desiredcompdate,org,task")] tasklist tasklist)
+        public async Task<IActionResult> Create([Bind("id,actionitem,comments,completedate,owner,priority,status,hours,workcode,updateddate,desiredcompdate,org,task")] tasklist tasklist, [Bind("id,ticketid,updatetext,createdate,updateby")] tasklist_updates tasklist_updates)
         {
             if (ModelState.IsValid)
             {
@@ -185,6 +194,8 @@ namespace WTTechPortal.Controllers
 
 
                 await _context.SaveChangesAsync();
+
+
                 //Setup Values from Database Prepare for Email
                 string taskitem = tasklist.task.ToString();
                 int taskownerint = tasklist.owner;
@@ -221,6 +232,21 @@ namespace WTTechPortal.Controllers
             return View(tasklist);
         }
 
+        public ActionResult ModalStatusUpdate(int Id)
+        {
+            ViewBag.Id = Id;
+            return PartialView("ModalStatusUpdate");
+        }
+
+        public ActionResult ModalDetails(int Id)
+        {
+            ViewBag.Id = Id;
+            return PartialView("Details");
+        }
+        
+
+
+
         // GET: tasklist/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -240,6 +266,7 @@ namespace WTTechPortal.Controllers
             var ownerlist = _context.owner_select.OrderBy(c => c.ownerid).Select(x => new { Id = x.ownerid, Value = x.ownername });
             var workcodelist = _context.workcodes.OrderBy(c => c.id).Select(x => new { Id = x.id, Value = x.workcode });
 
+            ViewBag.tasklistupdates = _context.tasklist_updates.Where(x => x.ticketid.Equals(id)).OrderByDescending(x => x.id);
             ViewBag.priorities = new SelectList(priorities, "Id", "Value");
             ViewBag.statuslist = new SelectList(statuslist, "Id", "Value");
             ViewBag.ownerlist = new SelectList(ownerlist, "Id", "Value");
@@ -255,18 +282,24 @@ namespace WTTechPortal.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         
-        public async Task<IActionResult> Edit(int id, [Bind("id,actionitem,comments,completedate,owner,priority,status,updateddate,desiredcompdate,org,hours,workcode,task")] tasklist tasklist)
+        public async Task<IActionResult> Edit(int id, [Bind("id,actionitem,comments,completedate,owner,priority,status,updateddate,desiredcompdate,org,hours,workcode,task")] tasklist tasklist, [Bind("id,ticketid,updatetext,createdate,updateby")] tasklist_updates tasklist_updates)
         {
             if (id != tasklist.id)
             {
                 return NotFound();
             }
 
+
+
+
+
+            await _context.SaveChangesAsync();
             if (ModelState.IsValid)
             {
                 try
                 {
                     _context.Update(tasklist);
+                    
                     await _context.SaveChangesAsync();
 
                     //Setup Values from Database Prepare for Email
@@ -287,6 +320,8 @@ namespace WTTechPortal.Controllers
 
                     string actionitem = tasklist.actionitem.ToString();
 
+                   
+
 
 
                     //Setup Values from Database Prepare for Email
@@ -299,15 +334,20 @@ namespace WTTechPortal.Controllers
                     string adminadd = _context.site_config.Select(x => x.adminemail).First();
                     string compdate = "";
                     string desirdate = "";
+
+                    /// Get Compelte Date if there is a value
                     if (tasklist.completedate != null)
                     {
                         compdate = tasklist.completedate.ToString().Substring(0, (tasklist.completedate.ToString().Length - 12));
                     }
 
+                    /// Get Desired Compelte Date if there is a value
                     if (tasklist.desiredcompdate != null)
                     {
                         desirdate = tasklist.desiredcompdate.ToString().Substring(0, (tasklist.desiredcompdate.ToString().Length - 12));
                     }
+
+                    // Build Email Info
 
                     string mailbody = "Task: <b>" + taskitem + "</b>  : was updated on a Edit <br/><br/><b>Current Action Item: </b>" 
                         + actionitem + "<br/><b>Status: </b>" + taskstatus + "<br/><b>Owner: </b>" + taskowner + "<br/><b>Priority: </b>" + taskpriority
@@ -343,8 +383,55 @@ namespace WTTechPortal.Controllers
             return View(tasklist);
         }
 
+
+        // POST: tasklist/UpdateStatus/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateStatus(int id, [Bind("id,ticketid,updatetext,createdate,updateby")] tasklist_updates tasklist_updates)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                //Check if there is an ID and increment
+                int updateid = 1;
+                if ((_context.tasklist_updates.Select(x => x.id).Max()) > 0)
+                {
+                    updateid = (_context.tasklist_updates.Select(x => x.id).Max()) + 1;
+                }
+
+                //Gets Current User
+                System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+                var username = _userManager.GetUserName(currentUser);
+
+                //Create Update if there is data    
+
+                tasklist_updates.id = updateid;
+                tasklist_updates.ticketid = id;
+                tasklist_updates.createdate = DateTime.Now;
+                tasklist_updates.updateby = username;
+                               
+
+
+                _context.Add(tasklist_updates);
+
+
+
+                await _context.SaveChangesAsync();
+
+                
+
+                return RedirectToAction("Index");
+            }
+            return View(tasklist_updates);
+        }
+
+
+
+
         // GET: tasklist/Delete/5
-        [Authorize(Roles = "Administrator")]
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

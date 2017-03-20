@@ -1,0 +1,26 @@
+﻿@* Here is the content for the modal*@
+@model WTTechPortal.Models.tasklist_updates
+<div id="target">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Form Modal</h4>
+    </div>
+    <form asp-action="UpdateStatus" asp-controller="tasklist" data-ajax="true" data-ajax-method="POST" data-ajax-mode="REPLACE-WITH" data-ajax-update="#target">
+        <div class="modal-body">
+            <div class="form-group">
+                <label asp-for="updatetext" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="updatetext" class="form-control" />
+                    <span asp-validation-for="updatetext" class="text-danger" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Update</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</div>
+

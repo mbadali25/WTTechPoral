@@ -35,6 +35,8 @@ namespace WTTechPortal.Data
         public DbSet<hypervvms> hypervvms { get; set; }
         public DbSet<workcodes> workcodes { get; set; }
 
+        public DbSet<tasklist_updates> tasklist_updates { get; set; }
+
         public WttechportalDbContext(DbContextOptions<WttechportalDbContext> options)
             : base(options)
         {

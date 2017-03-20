@@ -68,28 +68,28 @@
                 <span asp-validation-for="comments" class="text-danger" />
             </div>
         </div>
-@if (this.User.IsInRole("Administrator"))
-{ 
-        <div class="form-group">
-            <label asp-for="workcode" class="col-md-2 control-label"></label>
-            
-            <div class="col-md-10">
-                <select asp-for="workcode"
-                        asp-items="ViewBag.workcodelist">
-                    <option>Please Select a Work Code</option>
-                </select>
-                <span asp-validation-for="workcode" class="text-danger" />
-            </div>
-        </div>
+        @if (this.User.IsInRole("Administrator"))
+        {
+            <div class="form-group">
+                <label asp-for="workcode" class="col-md-2 control-label"></label>
 
-    <div class="form-group">
-        <label asp-for="hours" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="hours" class="form-control" />
-            <span asp-validation-for="hours" class="text-danger" />
-        </div>
-    </div>
-}
+                <div class="col-md-10">
+                    <select asp-for="workcode"
+                            asp-items="ViewBag.workcodelist">
+                        <option>Please Select a Work Code</option>
+                    </select>
+                    <span asp-validation-for="workcode" class="text-danger" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="hours" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="hours" class="form-control" />
+                    <span asp-validation-for="hours" class="text-danger" />
+                </div>
+            </div>
+        }
         <div class="form-group">
             <label asp-for="desiredcompdate" class="col-md-2 control-label"></label>
             <div class="col-md-10">
@@ -104,6 +104,7 @@
                 <span asp-validation-for="completedate" class="text-danger" />
             </div>
         </div>
+
         <div class="form-group">
             <label asp-for="updateddate" class="col-md-2 control-label"></label>
             <div class="col-md-10">
@@ -111,10 +112,11 @@
                 <span asp-validation-for="updateddate" class="text-danger" />
             </div>
         </div>
+
         <div class="form-group" hidden>
             <label asp-for="org" hidden class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="org"  hidden class="form-control" />
+                <input asp-for="org" hidden class="form-control" />
                 <span asp-validation-for="org" hidden class="text-danger" />
             </div>
         </div>
@@ -124,7 +126,45 @@
             </div>
         </div>
     </div>
+
 </form>
+
+
+<h3>Updates</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Update Info
+            </th>
+            <th>
+                Update Date
+            </th>
+            <th>
+                Updated By
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.tasklistupdates)
+        {
+            <tr>
+                <td>
+                    @item.updatetext
+                </td>
+                <td>
+                    @item.createdate
+                </td>
+                <td>
+                    @item.updateby
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
 
 
 <div>
