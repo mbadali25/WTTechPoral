@@ -1,5 +1,6 @@
 ﻿@* Here is the content for the modal*@
 @model WTTechPortal.Models.tasklist_updates
+
 <div id="target">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -9,6 +10,8 @@
     </div>
     <form asp-action="UpdateStatus" asp-controller="tasklist" data-ajax="true" data-ajax-method="POST" data-ajax-mode="REPLACE-WITH" data-ajax-update="#target">
         <div class="modal-body">
+            <input type="hidden" asp-for="id" />
+            <input type="hidden" asp-for="ticketid" value="@ViewBag.Id" />
             <div class="form-group">
                 <label asp-for="updatetext" class="col-md-2 control-label"></label>
                 <div class="col-md-10">
