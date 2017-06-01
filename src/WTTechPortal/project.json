@@ -61,10 +61,10 @@
     "Microsoft.EntityFrameworkCore": "1.1.0",
     "WebApiContrib.Core.Formatter.Csv": "1.0.1",
     "Localization.SqlLocalizer": "1.0.6",
-    "SapientGuardian.EntityFrameworkCore.MySql": "7.1.15",
-    "PagedList.Core.Mvc": "1.0.0",
     "Sakura.AspNetCore.PagedList.Async": "1.0.0",
-    "Sakura.AspNetCore.Mvc.PagedList": "2.0.11" },
+    "PagedList.Core.Mvc": "1.0.1",
+    "Sakura.AspNetCore.Mvc.PagedList": "2.0.12",
+    "SapientGuardian.EntityFrameworkCore.MySql": "7.1.23" },
 
   "tools": {
     "Microsoft.EntityFrameworkCore.Tools.DotNet": "1.0.0-preview3-final",

@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.1/",
-    "signature": "ba9f05456f5e35c01f9eaaa0ce738b1a35ee7a29"
+    "signature": "510db6ef64e8689f6244de4af8d9f5387d060017"
   },
   "compilationOptions": {
     "defines": [
@@ -48,10 +48,10 @@
           "Microsoft.EntityFrameworkCore": "1.1.0",
           "WebApiContrib.Core.Formatter.Csv": "1.0.1",
           "Localization.SqlLocalizer": "1.0.6",
-          "SapientGuardian.EntityFrameworkCore.MySql": "7.1.15",
-          "PagedList.Core.Mvc": "1.0.0",
           "Sakura.AspNetCore.PagedList.Async": "1.0.0",
-          "Sakura.AspNetCore.Mvc.PagedList": "2.0.11"
+          "PagedList.Core.Mvc": "1.0.1",
+          "Sakura.AspNetCore.Mvc.PagedList": "2.0.12",
+          "SapientGuardian.EntityFrameworkCore.MySql": "7.1.23"
         },
         "compile": {
           "WTTechPortal.dll": {}
@@ -1433,8 +1433,11 @@
           "lib/netcoreapp1.0/PagedList.Core.dll": {}
         }
       },
-      "PagedList.Core.Mvc/1.0.0": {
+      "PagedList.Core.Mvc/1.0.1": {
         "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.1.0",
+          "Microsoft.AspNetCore.Razor.Runtime": "1.1.0",
+          "NETStandard.Library": "1.6.1",
           "PagedList.Core": "1.17.4"
         },
         "compile": {
@@ -1542,10 +1545,11 @@
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.win7-x64.runtime.native.System.Data.SqlClient.sni/4.3.0": {},
       "runtime.win7-x86.runtime.native.System.Data.SqlClient.sni/4.3.0": {},
-      "Sakura.AspNetCore.Mvc.PagedList/2.0.11": {
+      "Sakura.AspNetCore.Mvc.PagedList/2.0.12": {
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.1.0",
           "Microsoft.AspNetCore.Razor.Runtime": "1.1.0",
+          "NETStandard.Library": "1.6.1",
           "Sakura.AspNetCore.PagedList.Abstractions": "2.0.0"
         },
         "compile": {
@@ -1579,19 +1583,19 @@
           "lib/netstandard1.3/Sakura.AspNetCore.PagedList.Async.dll": {}
         }
       },
-      "SapientGuardian.EntityFrameworkCore.MySql/7.1.15": {
+      "SapientGuardian.EntityFrameworkCore.MySql/7.1.23": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "1.1.0",
           "Microsoft.EntityFrameworkCore.Relational": "1.1.0",
           "NETStandard.Library": "1.6.1",
-          "SapientGuardian.MySql.Data": "6.9.813",
+          "SapientGuardian.MySql.Data": "6.9.816",
           "System.Linq": "4.3.0"
         },
         "compile": {
           "lib/netstandard1.3/SapientGuardian.EntityFrameworkCore.MySql.dll": {}
         }
       },
-      "SapientGuardian.MySql.Data/6.9.813": {
+      "SapientGuardian.MySql.Data/6.9.816": {
         "dependencies": {
           "Microsoft.CSharp": "4.3.0",
           "Microsoft.Extensions.PlatformAbstractions": "1.1.0",
@@ -1621,6 +1625,7 @@
           "System.Security.Cryptography.Primitives": "4.3.0",
           "System.Security.Cryptography.X509Certificates": "4.3.0",
           "System.Text.Encoding": "4.3.0",
+          "System.Text.Encoding.CodePages": "4.3.0",
           "System.Text.Encoding.Extensions": "4.3.0",
           "System.Text.RegularExpressions": "4.3.0",
           "System.Threading": "4.3.0",
@@ -3175,10 +3180,10 @@
           "Microsoft.EntityFrameworkCore": "1.1.0",
           "WebApiContrib.Core.Formatter.Csv": "1.0.1",
           "Localization.SqlLocalizer": "1.0.6",
-          "SapientGuardian.EntityFrameworkCore.MySql": "7.1.15",
-          "PagedList.Core.Mvc": "1.0.0",
           "Sakura.AspNetCore.PagedList.Async": "1.0.0",
-          "Sakura.AspNetCore.Mvc.PagedList": "2.0.11"
+          "PagedList.Core.Mvc": "1.0.1",
+          "Sakura.AspNetCore.Mvc.PagedList": "2.0.12",
+          "SapientGuardian.EntityFrameworkCore.MySql": "7.1.23"
         },
         "runtime": {
           "WTTechPortal.dll": {}
@@ -4557,8 +4562,11 @@
           "lib/netcoreapp1.0/PagedList.Core.dll": {}
         }
       },
-      "PagedList.Core.Mvc/1.0.0": {
+      "PagedList.Core.Mvc/1.0.1": {
         "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.1.0",
+          "Microsoft.AspNetCore.Razor.Runtime": "1.1.0",
+          "NETStandard.Library": "1.6.1",
           "PagedList.Core": "1.17.4"
         },
         "runtime": {
@@ -4666,10 +4674,11 @@
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.win7-x64.runtime.native.System.Data.SqlClient.sni/4.3.0": {},
       "runtime.win7-x86.runtime.native.System.Data.SqlClient.sni/4.3.0": {},
-      "Sakura.AspNetCore.Mvc.PagedList/2.0.11": {
+      "Sakura.AspNetCore.Mvc.PagedList/2.0.12": {
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.1.0",
           "Microsoft.AspNetCore.Razor.Runtime": "1.1.0",
+          "NETStandard.Library": "1.6.1",
           "Sakura.AspNetCore.PagedList.Abstractions": "2.0.0"
         },
         "runtime": {
@@ -4703,19 +4712,19 @@
           "lib/netstandard1.3/Sakura.AspNetCore.PagedList.Async.dll": {}
         }
       },
-      "SapientGuardian.EntityFrameworkCore.MySql/7.1.15": {
+      "SapientGuardian.EntityFrameworkCore.MySql/7.1.23": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "1.1.0",
           "Microsoft.EntityFrameworkCore.Relational": "1.1.0",
           "NETStandard.Library": "1.6.1",
-          "SapientGuardian.MySql.Data": "6.9.813",
+          "SapientGuardian.MySql.Data": "6.9.816",
           "System.Linq": "4.3.0"
         },
         "runtime": {
           "lib/netstandard1.3/SapientGuardian.EntityFrameworkCore.MySql.dll": {}
         }
       },
-      "SapientGuardian.MySql.Data/6.9.813": {
+      "SapientGuardian.MySql.Data/6.9.816": {
         "dependencies": {
           "Microsoft.CSharp": "4.3.0",
           "Microsoft.Extensions.PlatformAbstractions": "1.1.0",
@@ -4745,6 +4754,7 @@
           "System.Security.Cryptography.Primitives": "4.3.0",
           "System.Security.Cryptography.X509Certificates": "4.3.0",
           "System.Text.Encoding": "4.3.0",
+          "System.Text.Encoding.CodePages": "4.3.0",
           "System.Text.Encoding.Extensions": "4.3.0",
           "System.Text.RegularExpressions": "4.3.0",
           "System.Threading": "4.3.0",
@@ -6718,10 +6728,10 @@
       "serviceable": true,
       "sha512": "sha512-q1HEnC+v01NY87+mF6YtNFMuZG15YCYcAUqR6jiKzSYJye+28TP6GTbRkrbN4ZgfnvBqeH8NtlPJQ1ayeA2UnA=="
     },
-    "PagedList.Core.Mvc/1.0.0": {
+    "PagedList.Core.Mvc/1.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-LUvVG1s3Hh5jpsLD5l99IDCWaDjsj1oOuGTHduORFgwOusqukxoYaJJlj7mzm+rHHONh5lEa2NA9NdpE0itgHQ=="
+      "sha512": "sha512-CQIjzt5xPtWZdNgHRs0j5vupwzYGxzQWsaa0XzzzYkV1Kz5UndJ/fT9Z/Ln16ARN3RjRPDqv3/s5if7UJ/dWnA=="
     },
     "Portable.BouncyCastle/1.8.1.1": {
       "type": "package",
@@ -6833,10 +6843,10 @@
       "serviceable": true,
       "sha512": "sha512-4cXRTIcttvIreAoqK/5hzTtzepeggac+m5A0rzH+9zLtnFh2J0rLuGeJR4KjNLyKqPzO0kjqrs5lkRJEKX8HAA=="
     },
-    "Sakura.AspNetCore.Mvc.PagedList/2.0.11": {
+    "Sakura.AspNetCore.Mvc.PagedList/2.0.12": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-mHy07NCEOs+y8B8U1CKlFwyHNJGHs+0pMCcK78TT+U8fGHi67KMD8iKkQnfbQdo2U1qqMkP1Hf4E57nhTIkF5g=="
+      "sha512": "sha512-Yxt4NwyUxIZD8k9Z4pKCeJm3gdpap0HjI1QyzsOXjbbHuRWXCu897xTi+YFcmBV+zaZOrYurxcVxWch8AyJa6Q=="
     },
     "Sakura.AspNetCore.PagedList/2.0.0": {
       "type": "package",
@@ -6853,15 +6863,15 @@
       "serviceable": true,
       "sha512": "sha512-aq3GVvL96ft36WpQ54ScmXlgIv6fSiWMoeA74vEB9ZYcR20Kmt37x+8M2BcYZJta5NBdg24p6dDtL8w5PlGNvw=="
     },
-    "SapientGuardian.EntityFrameworkCore.MySql/7.1.15": {
+    "SapientGuardian.EntityFrameworkCore.MySql/7.1.23": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-/CpotbQHmndjiY6d+jEOgxcEGmqEwnG+GF2Xe7OtzRAswE0uK53D1jYiHp1iIY1iESJCVMHSGhxl/cGj5kf1vw=="
+      "sha512": "sha512-1j43FffWauDEauAVButsFiRsmzBbxA8Vs4b+EuvR8FgCIwd2Zr6L7aXzVSE+DXDeSKgkpvNuv/FmfBbeCcJ1VA=="
     },
-    "SapientGuardian.MySql.Data/6.9.813": {
+    "SapientGuardian.MySql.Data/6.9.816": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-9umAXTPXeO66iSThDL7mOB3cDD1zu3N5Kl4X/1jLLJJZVtEAtpOCeGXSGG99u6On9lZKSLEjEC7EJ+YBIGWyCw=="
+      "sha512": "sha512-uFY+zapwr++/woFnmFLCrQ1DsrO1ItzQN5WQkWBdndYlTsm7ZBrDCK6g4BEzU4+wG2FPD4Jo/by/VsQqZ9PrsQ=="
     },
     "System.AppContext/4.3.0": {
       "type": "package",

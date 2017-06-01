@@ -180,20 +180,19 @@ namespace WTTechPortal.Controllers
             if (ModelState.IsValid)
             {
                 //Get Role Org Id form currnet User. If the user isn't an Administrator
-                if (!(this.User.IsInRole("Administrator")))
-                {
+                
                     var userid = (await _userManager.GetUserAsync(User));
                     var role = (await _userManager.GetRolesAsync(userid)).First();
                     int orgid = (await _roleManager.FindByNameAsync(role)).org;
+                    int newid =(_context.tasklist.Select(x => x.id)).Max() +1;
+                    tasklist.id = newid;
                     tasklist.org = orgid;
-                }
 
 
                 _context.Add(tasklist);
 
-
-
                 await _context.SaveChangesAsync();
+
 
 
                 //Setup Values from Database Prepare for Email

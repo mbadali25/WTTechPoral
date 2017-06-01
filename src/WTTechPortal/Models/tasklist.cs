@@ -14,6 +14,7 @@ namespace WTTechPortal.Models
     {
         
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "Task")]
