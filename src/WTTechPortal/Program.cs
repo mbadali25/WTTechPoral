@@ -14,7 +14,7 @@ namespace WTTechPortal
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseUrls("http://*:5000")
+                .UseUrls("http://*:5001")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
