@@ -188,10 +188,12 @@ namespace WTTechPortal.Controllers
                     tasklist.org = orgid;
                 }
 
-                await _context.AddAsync(tasklist);
-                                
-                await _context.SaveChangesAsync();
 
+                _context.Add(tasklist);
+
+
+
+                await _context.SaveChangesAsync();
 
 
                 //Setup Values from Database Prepare for Email
