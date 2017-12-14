@@ -64,7 +64,8 @@ namespace WTTechPortal
                 .AddDefaultTokenProviders();
             services.AddDbContext<WttechportalDbContext>(options =>
             options.UseMySQL(Configuration.GetConnectionString("MYSQLConnection"), b => b.MigrationsAssembly("ImportExportLocalization")));
-
+            services.AddDbContext<JiraDbContext>(options =>
+            options.UseMySQL(Configuration.GetConnectionString("JiraConnection")));
 
 
 

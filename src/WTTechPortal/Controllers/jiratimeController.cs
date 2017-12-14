@@ -88,7 +88,7 @@ namespace WTTechPortal.Controllers
                 //handle wrong username
                 if (user == "mbadali25")
                 {
-                    user = "mbadali25";
+                    user = "mbadali";
                 }
                 results = _context.jiraissue.Where(a => a.PROJECT.Equals(10500)).Where(b => b.TIMESPENT.HasValue).Include(x => x.projects).Include(i => i.issusestatusname).Include(r => r.resolutions).Where(m => m.DUEDATE.Value.Month.Equals(month)).Where(y => y.DUEDATE.Value.Year.Equals(year)).Where(a => a.ASSIGNEE.Equals(user));
                 
