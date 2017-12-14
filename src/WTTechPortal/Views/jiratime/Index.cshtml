@@ -1,0 +1,122 @@
+@model IEnumerable<WTTechPortal.Models.Jira.jiraissue>
+
+
+
+@{
+    ViewData["Title"] = "Jira Hours Overview";
+    Layout = "_Layout-Wide";
+}
+
+
+
+@{
+    SelectList yearlist = ViewBag.yearlist;
+    SelectList monthlist = ViewBag.monthlist;
+    
+    var groupsitems = ViewBag.groups;
+    decimal hourcount = 0;
+
+}
+
+@using (Html.BeginForm("Index", "jiratime", FormMethod.Get))
+{
+
+    <text>Filter By Year: </text> @Html.DropDownList("year",yearlist ,"Select All")<br />
+    <text>Filter By Month: </text> @Html.DropDownList("month",monthlist ,"Select All")<br />
+    <text>Show Only My Tickets: </text> @Html.CheckBox("usercheck",(bool)ViewBag.isusercheck, new { title = "Toggle - Show only your tickets records." })<br />
+
+
+    <br /> <input type="submit" value="Search" />
+    
+}
+
+<br />@Html.ActionLink("Reset Filters", "Index")
+
+<h2>Total Hours Overview</h2>
+
+@foreach (var aitem in groupsitems)
+{
+
+    <p>  <b>@Convert.ToString(aitem.Text) :</b> @Convert.ToString(aitem.Value) Hours </p>
+    hourcount = hourcount + Convert.ToDecimal(aitem.Value);
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ASSIGNEE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DESCRIPTION)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DUEDATE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PROJECT)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.SUMMARY)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.TIMESPENThr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.issuenum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.issuestatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.worklogboydmodded)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RESOLUTION)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ASSIGNEE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DESCRIPTION)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DUEDATE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.projectname)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.SUMMARY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TIMESPENThr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.properticketid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.issuestatusn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.worklogboydmodded)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.resolutionname)
+            </td>           
+
+
+   
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,88 @@
+@model WTTechPortal.Models.Jira.jiraissue
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>jiraissue</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ASSIGNEE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ASSIGNEE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DESCRIPTION)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DESCRIPTION)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DUEDATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DUEDATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PROJECT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PROJECT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RESOLUTION)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RESOLUTION)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SUMMARY)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SUMMARY)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TIMEORIGINALESTIMATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TIMEORIGINALESTIMATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TIMESPENT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TIMESPENT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.issuenum)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.issuenum)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.issuestatus)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.issuestatus)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.issuetype)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.issuetype)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </form>
+</div>

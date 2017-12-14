@@ -1,0 +1,103 @@
+@model WTTechPortal.Models.Jira.jiraissue
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>jiraissue</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="ID" />
+        <div class="form-group">
+            <label asp-for="ASSIGNEE" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ASSIGNEE" class="form-control" />
+                <span asp-validation-for="ASSIGNEE" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DESCRIPTION" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DESCRIPTION" class="form-control" />
+                <span asp-validation-for="DESCRIPTION" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DUEDATE" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DUEDATE" class="form-control" />
+                <span asp-validation-for="DUEDATE" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PROJECT" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PROJECT" class="form-control" />
+                <span asp-validation-for="PROJECT" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="RESOLUTION" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="RESOLUTION" class="form-control" />
+                <span asp-validation-for="RESOLUTION" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="SUMMARY" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="SUMMARY" class="form-control" />
+                <span asp-validation-for="SUMMARY" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TIMEORIGINALESTIMATE" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="TIMEORIGINALESTIMATE" class="form-control" />
+                <span asp-validation-for="TIMEORIGINALESTIMATE" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TIMESPENT" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="TIMESPENT" class="form-control" />
+                <span asp-validation-for="TIMESPENT" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="issuenum" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="issuenum" class="form-control" />
+                <span asp-validation-for="issuenum" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="issuestatus" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="issuestatus" class="form-control" />
+                <span asp-validation-for="issuestatus" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="issuetype" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="issuetype" class="form-control" />
+                <span asp-validation-for="issuetype" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

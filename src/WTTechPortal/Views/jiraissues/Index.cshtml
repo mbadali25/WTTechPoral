@@ -1,0 +1,95 @@
+@model IEnumerable<WTTechPortal.Models.Jira.jiraissue>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ASSIGNEE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DESCRIPTION)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DUEDATE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PROJECT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RESOLUTION)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SUMMARY)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TIMEORIGINALESTIMATE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TIMESPENT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.issuenum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.issuestatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.issuetype)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ASSIGNEE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DESCRIPTION)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DUEDATE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PROJECT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RESOLUTION)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SUMMARY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TIMEORIGINALESTIMATE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TIMESPENT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.issuenum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.issuestatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.issuetype)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,84 @@
+@model WTTechPortal.Models.Jira.jiraissue
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>jiraissue</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ASSIGNEE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ASSIGNEE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DESCRIPTION)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DESCRIPTION)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DUEDATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DUEDATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PROJECT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PROJECT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RESOLUTION)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RESOLUTION)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SUMMARY)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SUMMARY)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TIMEORIGINALESTIMATE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TIMEORIGINALESTIMATE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TIMESPENT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TIMESPENT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.issuenum)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.issuenum)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.issuestatus)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.issuestatus)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.issuetype)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.issuetype)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
