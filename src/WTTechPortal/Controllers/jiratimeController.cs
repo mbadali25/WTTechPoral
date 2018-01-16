@@ -26,11 +26,15 @@ namespace WTTechPortal.Controllers
         // GET: jiratime
         public async Task<IActionResult> Index(int? month, int? year, bool? usercheck)
         {
+
+
+
+
             var yearlist = new SelectList(new[]
 {
                 new {Id="2016",Value="2016" },
                 new {Id="2017",Value="2017" },
-                new {Id="2018",Value="2018" }
+                new {Id="2018",Value="2018" },
             },
                 "Id", "Value");
 
@@ -50,16 +54,10 @@ namespace WTTechPortal.Controllers
                 new {Value="December",Id="12" },
             },
             "Id", "Value");
-            if (month == null)
-            {
-                month = DateTime.Today.Month;
-            }
-            if (year == null)
-            {
-                year = DateTime.Today.Year;
-            }
 
-              // Storing List in View bags
+
+
+            // Storing List in View bags
             ViewBag.yearlist = yearlist;
             ViewBag.monthlist = monthlist;
 
@@ -77,8 +75,21 @@ namespace WTTechPortal.Controllers
                 isusercheck = false;
             }
             ViewBag.isusercheck = isusercheck;
-            
-            var results = _context.jiraissue.Where(a => a.PROJECT.Equals(10500)).Where(b => b.TIMESPENT.HasValue).Include(x => x.projects).Include(i => i.issusestatusname).Include(r => r.resolutions).Include(w => w.worklogs).Where(m => m.DUEDATE.Value.Month.Equals(month)).Where(y => y.DUEDATE.Value.Year.Equals(year));
+
+            if (month == null)
+            {
+                month = DateTime.Today.Month;
+            }
+            if (year == null)
+            {
+                year = DateTime.Today.Year;
+            }
+
+
+
+
+            var  results = _context.jiraissue.Include(cv => cv.customfieldvalues).Include(co => co.customfieldvalues.customfieldoptions).Include(x => x.projects).Include(i => i.issusestatusname).Include(r => r.resolutions).Include(w => w.worklogs).Where(a => a.PROJECT.Equals(10500)).Where(r => r.RESOLUTIONDATE.HasValue).Where(b => b.TIMESPENT.HasValue).Where(m => m.DUEDATE.Value.Month.Equals(month)).Where(y => y.DUEDATE.Value.Year.Equals(year));
+
 
             if (isusercheck == true)
 
@@ -91,8 +102,11 @@ namespace WTTechPortal.Controllers
                 {
                     user = "mbadali";
                 }
-                results = _context.jiraissue.Where(a => a.PROJECT.Equals(10500)).Where(b => b.TIMESPENT.HasValue).Include(x => x.projects).Include(i => i.issusestatusname).Include(r => r.resolutions).Where(m => m.DUEDATE.Value.Month.Equals(month)).Where(y => y.DUEDATE.Value.Year.Equals(year)).Where(a => a.ASSIGNEE.Equals(user));
+ 
+                    results = _context.jiraissue.Where(a => a.PROJECT.Equals(10500)).Where(r => r.RESOLUTION.Equals(10000)).Where(b => b.TIMESPENT.HasValue).Include(x => x.projects).Include(i => i.issusestatusname).Include(r => r.resolutions).Where(m => m.DUEDATE.Value.Month.Equals(month)).Where(y => y.DUEDATE.Value.Year.Equals(year)).Where(a => a.ASSIGNEE.Equals(user));
                 
+                
+
             }
 
 

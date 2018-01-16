@@ -82,6 +82,11 @@ namespace WTTechPortal.Models.Jira
 
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Display(Name = "Resolution Date")]
+        public DateTime? RESOLUTIONDATE { get; set; }
+
+
         [ForeignKey("ID")]
         public customfieldvalue customfieldvalues { get; set; }
 
