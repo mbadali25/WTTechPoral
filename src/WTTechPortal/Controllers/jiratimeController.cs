@@ -30,6 +30,7 @@ namespace WTTechPortal.Controllers
 {
                 new {Id="2016",Value="2016" },
                 new {Id="2017",Value="2017" },
+                new {Id="2018",Value="2018" }
             },
                 "Id", "Value");
 
