@@ -48,19 +48,17 @@
                 @Html.DisplayNameFor(model => model.ASSIGNEE)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.PROJECT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SUMMARY)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DESCRIPTION)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DUEDATE)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PROJECT)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.SUMMARY)
-            </th>
-
             <th>
                 @Html.DisplayNameFor(model => model.TIMESPENThr)
             </th>
@@ -86,18 +84,18 @@
                 @Html.DisplayFor(modelItem => item.ASSIGNEE)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.projectname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SUMMARY)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.DESCRIPTION)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DUEDATE)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.projectname)
-            </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.SUMMARY)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TIMESPENThr)
             </td>
