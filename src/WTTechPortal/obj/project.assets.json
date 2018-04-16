@@ -14969,6 +14969,9 @@
           }
         },
         "imports": [
+          "dotnet5.6",
+          "dnxcore50",
+          "portable-net45+win8",
           "net461"
         ],
         "assetTargetFallback": true,
