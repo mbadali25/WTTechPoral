@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using WTTechPortal.Models;
-using WTTechPortal.Models.Assests;
-using WTTechPortal.Models.Inventory;
-using WTTechPortal.Models.IPAM;
+﻿using Microsoft.EntityFrameworkCore;
 using WTTechPortal.Models.Jira;
 
 namespace WTTechPortal.Data
@@ -25,6 +16,7 @@ namespace WTTechPortal.Data
         public DbSet <jiraaction> jiraaction { get; set; }
 
         public DbSet<jiraissue> jiraissue { get; set; }
+
 
         public DbSet<project> project { get; set; }
         public DbSet<resolution> resolution { get; set; }

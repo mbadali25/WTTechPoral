@@ -1,0 +1,12 @@
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\obj\Debug\netcoreapp2.0\WTTechPortal.csprojResolveAssemblyReference.cache
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\bin\Debug\netcoreapp2.0\WTTechPortal.deps.json
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\bin\Debug\netcoreapp2.0\WTTechPortal.runtimeconfig.json
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\bin\Debug\netcoreapp2.0\WTTechPortal.runtimeconfig.dev.json
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\bin\Debug\netcoreapp2.0\WTTechPortal.dll
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\bin\Debug\netcoreapp2.0\WTTechPortal.pdb
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\obj\Debug\netcoreapp2.0\WTTechPortal.csproj.CoreCompileInputs.cache
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\obj\Debug\netcoreapp2.0\WTTechPortal.AssemblyInfoInputs.cache
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\obj\Debug\netcoreapp2.0\WTTechPortal.AssemblyInfo.cs
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\obj\Debug\netcoreapp2.0\WTTechPortal.dll
+C:\Users\d3ade\Documents\GitHub\WTTechPoral\src\WTTechPortal\obj\Debug\netcoreapp2.0\WTTechPortal.pdb

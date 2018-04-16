@@ -1,16 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ECA6C3AF-3455-461B-A867-FC55F46C7827}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7C2F339A-3215-47BF-A532-499274746909}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WTTechPortal", "src\WTTechPortal\WTTechPortal.xproj", "{0C435D4A-B8CA-4418-ABD8-81538FB817B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WTTechPortal", "src\WTTechPortal\WTTechPortal.csproj", "{0C435D4A-B8CA-4418-ABD8-81538FB817B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,5 +25,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0C435D4A-B8CA-4418-ABD8-81538FB817B5} = {ECA6C3AF-3455-461B-A867-FC55F46C7827}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19DEAB69-F78F-4CB0-9065-29370ADBD261}
 	EndGlobalSection
 EndGlobal

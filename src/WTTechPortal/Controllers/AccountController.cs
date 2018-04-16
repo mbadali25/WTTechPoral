@@ -4,9 +4,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;   
 using Microsoft.Extensions.Logging;
 using WTTechPortal.Models;
 using WTTechPortal.Models.AccountViewModels;
@@ -92,7 +93,7 @@ namespace WTTechPortal.Controllers
             return View(model);
         }
 
-        [HttpGet]
+  /*      [HttpGet]
         [Authorize(Roles = "Administrator")]
         public IActionResult CreateRole(string returnUrl = null)
         {
@@ -101,7 +102,9 @@ namespace WTTechPortal.Controllers
             ViewBag.orglist = new SelectList(orglist, "Id", "Value");
             return View();
         }
+        */
 
+            /*
         [HttpPost]       
         [ValidateAntiForgeryToken]
         public  IActionResult CreateRole(WTIdentityRole rolemodel, string returnUrl = null)
@@ -130,6 +133,8 @@ namespace WTTechPortal.Controllers
             }
             return View(rolemodel);
         }
+        */
+
 
         //
         // GET: /Account/Register
@@ -156,12 +161,8 @@ namespace WTTechPortal.Controllers
 
 
 
-            ApplicationUser user = new ApplicationUser();
-            user.UserName = model.UserName;
-            user.Email = model.Email;
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-
+            var user = new ApplicationUser { UserName = model.UserName, Email = model.Email,FirstName= model.FirstName, LastName = model.LastName };
+      
             IdentityResult result = _userManager.CreateAsync
             (user, model.Password).Result;
 

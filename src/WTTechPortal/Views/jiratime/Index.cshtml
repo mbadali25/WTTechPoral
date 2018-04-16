@@ -13,6 +13,8 @@
     SelectList yearlist = ViewBag.yearlist;
     SelectList monthlist = ViewBag.monthlist;
     
+
+
     var groupsitems = ViewBag.groups;
     decimal hourcount = 0;
 
@@ -23,6 +25,7 @@
 
     <text>Filter By Year: </text> @Html.DropDownList("year",yearlist ,"Select All")<br />
     <text>Filter By Month: </text> @Html.DropDownList("month",monthlist ,"Select All")<br />
+    <text>Filter By Client: </text> @Html.DropDownList("projectid", new SelectList(ViewBag.companylistitems,"ID","pname"))<br />
     <text>Show Only My Tickets: </text> @Html.CheckBox("usercheck",(bool)ViewBag.isusercheck, new { title = "Toggle - Show only your tickets records." })<br />
 
 

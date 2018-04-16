@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using WTTechPortal.Data;
 using WTTechPortal.Models.Jira;
 using Microsoft.AspNetCore.Identity;
+using WTTechPortal.Services;
 using WTTechPortal.Models;
+using Aspose.Pdf;
+using Aspose.Pdf.Text;
+using System.IO;
 
 namespace WTTechPortal.Controllers
 {
@@ -24,10 +27,9 @@ namespace WTTechPortal.Controllers
         }
 
         // GET: jiratime
-        public async Task<IActionResult> Index(int? month, int? year, bool? usercheck)
+        public async Task<IActionResult> Index(int? month, int? year,  int? projectid, bool? usercheck)
         {
-
-
+            
 
 
             var yearlist = new SelectList(new[]
@@ -85,10 +87,15 @@ namespace WTTechPortal.Controllers
                 year = DateTime.Today.Year;
             }
 
+            
+            var results = _context.jiraissue.Include(cv => cv.customfieldvalues).Include(co => co.customfieldvalues.customfieldoptions).Include(x => x.projects).Include(i => i.issusestatusname).Include(r => r.resolutions).Include(w => w.worklogs).Where(r => r.RESOLUTIONDATE.HasValue).Where(b => b.TIMESPENT.HasValue).Where(m => m.DUEDATE.Value.Month.Equals(month)).Where(y => y.DUEDATE.Value.Year.Equals(year));
+            if (projectid != null)
+            {
+                results = results.Where(a => a.PROJECT.Equals(projectid));
+            }
+            
 
-
-
-            var  results = _context.jiraissue.Include(cv => cv.customfieldvalues).Include(co => co.customfieldvalues.customfieldoptions).Include(x => x.projects).Include(i => i.issusestatusname).Include(r => r.resolutions).Include(w => w.worklogs).Where(a => a.PROJECT.Equals(10500)).Where(r => r.RESOLUTIONDATE.HasValue).Where(b => b.TIMESPENT.HasValue).Where(m => m.DUEDATE.Value.Month.Equals(month)).Where(y => y.DUEDATE.Value.Year.Equals(year));
+            
 
 
             if (isusercheck == true)
@@ -103,7 +110,7 @@ namespace WTTechPortal.Controllers
                     user = "mbadali";
                 }
  
-                    results = _context.jiraissue.Where(a => a.PROJECT.Equals(10500)).Where(r => r.RESOLUTION.Equals(10000)).Where(b => b.TIMESPENT.HasValue).Include(x => x.projects).Include(i => i.issusestatusname).Include(r => r.resolutions).Where(m => m.DUEDATE.Value.Month.Equals(month)).Where(y => y.DUEDATE.Value.Year.Equals(year)).Where(a => a.ASSIGNEE.Equals(user));
+                    results = results.Where(a => a.ASSIGNEE.Equals(user));
                 
                 
 
@@ -122,8 +129,14 @@ namespace WTTechPortal.Controllers
                 Value = r.Hours.ToString()
             })).ToList();
 
-            ViewBag.groups = group;
+            var companies = _context.project;
+            var companylist = (from c in companies
+                               orderby c.pname
+                               select c).ToList();
+            companylist.Insert(0 ,new project { ID = 0, pname = "Select All" });
             
+            ViewBag.groups = group;
+            ViewBag.companylistitems = companylist;
             return View(await results.ToListAsync());
         }
 
@@ -143,6 +156,80 @@ namespace WTTechPortal.Controllers
 
             return View(jiraissue);
         }
+
+        // GET: jiratime/Export
+      /*  public IActionResult Export(int? month, int? year)
+        {
+            if (month == null)
+            {
+                month = DateTime.Today.Month;
+            }
+            if (year == null)
+            {
+                year = DateTime.Today.Year;
+            }
+
+
+            var results = _context.jiraissue.ToList();
+            // Step 1
+            var document = new Document
+            {
+                PageInfo = new PageInfo { Margin = new MarginInfo(28, 28, 28, 42) }
+            };
+
+            // Step 2
+            var pdfPage = document.Pages.Add();
+
+            // Step 3
+      
+
+            // Initializes a new instance of the TextFragment for report's title 
+            var textFragment = new TextFragment("Test Title");
+            // Set text properties
+            textFragment.TextState.FontSize = 12;
+            textFragment.TextState.Font = FontRepository.FindFont("TimesNewRoman");
+            textFragment.TextState.FontStyle = FontStyles.Bold;
+
+            // Initializes a new instance of the Table
+            Table table = new Table
+            {
+                // Set column auto widths of the table
+                ColumnWidths = "10 10 10 10 10 10",
+                ColumnAdjustment = ColumnAdjustment.AutoFitToContent,
+                // Set cell padding
+                DefaultCellPadding = new MarginInfo(5, 5, 5, 5),
+                // Set the table border color as Black
+                Border = new BorderInfo(BorderSide.All, .5f, Color.Black),
+                // Set the border for table cells as Black
+                DefaultCellBorder = new BorderInfo(BorderSide.All, .2f, Color.Black),
+            };
+
+            table.DefaultCellTextState = new TextState("TimesNewRoman", 10);
+
+            //table.SetColumnTextState(5, paymentFormat);
+            table.ImportEntityList(results);
+
+            //Repeat Header
+            table.RepeatingRowsCount = 1;
+
+            // Step 4
+            pdfPage.Paragraphs.Add(textFragment);
+
+
+            // Add table object to first page of input document
+            pdfPage.Paragraphs.Add(table);
+
+            // Step 5
+            using (var streamOut = new MemoryStream())
+            {
+                document.Save(streamOut);
+                return new FileContentResult(streamOut.ToArray(), "application/pdf")
+                {
+                    FileDownloadName = "tenants.pdf"
+                };
+            }
+        
+    }*/
 
         // GET: jiratime/Create
         public IActionResult Create()

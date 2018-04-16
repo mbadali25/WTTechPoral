@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WTTechPortal.Models;
@@ -13,6 +13,8 @@ using WTTechPortal.Data;
 using WTTechPortal.Models.Login;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
+using System.Text.Encodings.Web;
 
 namespace WTTechPortal.Controllers
 {
@@ -24,8 +26,11 @@ namespace WTTechPortal.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<WTIdentityRole> _roleManager;
         private readonly IEmailSender _emailSender;
-        private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+       // private readonly UrlEncoder _urlEncoder;
+
+        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
+        private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
 
         public ManageController(
         UserManager<ApplicationUser> userManager,
@@ -41,60 +46,73 @@ namespace WTTechPortal.Controllers
             _roleManager = roleManager;
             _context = context;
             _emailSender = emailSender;
-            _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
         }
 
-        //
-        // GET: /Manage/Index
-        [HttpGet]
-        public async Task<IActionResult> Index(ManageMessageId? message = null)
-        {
-            ViewData["StatusMessage"] =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
+        [TempData]
+        public string StatusMessage { get; set; }
 
-            var user = await GetCurrentUserAsync();
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return View("Error");
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+
             var model = new IndexViewModel
             {
-                HasPassword = await _userManager.HasPasswordAsync(user),
-                PhoneNumber = await _userManager.GetPhoneNumberAsync(user),
-                TwoFactor = await _userManager.GetTwoFactorEnabledAsync(user),
-                Logins = await _userManager.GetLoginsAsync(user),
-                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
+                Username = user.UserName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                IsEmailConfirmed = user.EmailConfirmed,
+                StatusMessage = StatusMessage
             };
+
             return View(model);
         }
 
-        //
-        // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveLogin(RemoveLoginViewModel account)
+        public async Task<IActionResult> RemoveLogin(RemoveLoginViewModel model)
         {
-            ManageMessageId? message = ManageMessageId.Error;
-            var user = await GetCurrentUserAsync();
-            if (user != null)
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
             {
-                var result = await _userManager.RemoveLoginAsync(user, account.LoginProvider, account.ProviderKey);
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    message = ManageMessageId.RemoveLoginSuccess;
-                }
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-            return RedirectToAction(nameof(ManageLogins), new { Message = message });
+
+            var result = await _userManager.RemoveLoginAsync(user, model.LoginProvider, model.ProviderKey);
+            if (!result.Succeeded)
+            {
+                throw new ApplicationException($"Unexpected error occurred removing external login for user with ID '{user.Id}'.");
+            }
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            StatusMessage = "The external login was removed.";
+            return RedirectToAction(nameof(ExternalLogins));
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> ExternalLogins()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var model = new ExternalLoginsViewModel { CurrentLogins = await _userManager.GetLoginsAsync(user) };
+            model.OtherLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync())
+                .Where(auth => model.CurrentLogins.All(ul => auth.Name != ul.LoginProvider))
+                .ToList();
+            model.ShowRemoveButton = await _userManager.HasPasswordAsync(user) || model.CurrentLogins.Count > 1;
+            model.StatusMessage = StatusMessage;
+
+            return View(model);
+        }
 
 
         //
@@ -104,26 +122,7 @@ namespace WTTechPortal.Controllers
             return View();
         }
 
-        //
-        // POST: /Manage/AddPhoneNumber
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            // Generate the token and send it
-            var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                return View("Error");
-            }
-            var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, model.PhoneNumber);
-            await _smsSender.SendSmsAsync(model.PhoneNumber, "Your security code is: " + code);
-            return RedirectToAction(nameof(VerifyPhoneNumber), new { PhoneNumber = model.PhoneNumber });
-        }
+
 
         //
         // POST: /Manage/EnableTwoFactorAuthentication
@@ -401,30 +400,7 @@ namespace WTTechPortal.Controllers
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
 
-        //GET: /Manage/ManageLogins
-        [HttpGet]
-        public async Task<IActionResult> ManageLogins(ManageMessageId? message = null)
-        {
-            ViewData["StatusMessage"] =
-                message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.AddLoginSuccess ? "The external login was added."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : "";
-            var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                return View("Error");
-            }
-            var userLogins = await _userManager.GetLoginsAsync(user);
-            var otherLogins = _signInManager.GetExternalAuthenticationSchemes().Where(auth => userLogins.All(ul => auth.AuthenticationScheme != ul.LoginProvider)).ToList();
-            ViewData["ShowRemoveButton"] = user.PasswordHash != null || userLogins.Count > 1;
-            return View(new ManageLoginsViewModel
-            {
-                CurrentLogins = userLogins,
-                OtherLogins = otherLogins
-            });
-        }
-
+       
         //
         // POST: /Manage/LinkLogin
         [HttpPost]
@@ -437,24 +413,32 @@ namespace WTTechPortal.Controllers
             return Challenge(properties, provider);
         }
 
-        //
-        // GET: /Manage/LinkLoginCallback
         [HttpGet]
-        public async Task<ActionResult> LinkLoginCallback()
+        public async Task<IActionResult> LinkLoginCallback()
         {
-            var user = await GetCurrentUserAsync();
+            var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return View("Error");
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-            var info = await _signInManager.GetExternalLoginInfoAsync(await _userManager.GetUserIdAsync(user));
+
+            var info = await _signInManager.GetExternalLoginInfoAsync(user.Id);
             if (info == null)
             {
-                return RedirectToAction(nameof(ManageLogins), new { Message = ManageMessageId.Error });
+                throw new ApplicationException($"Unexpected error occurred loading external login info for user with ID '{user.Id}'.");
             }
+
             var result = await _userManager.AddLoginAsync(user, info);
-            var message = result.Succeeded ? ManageMessageId.AddLoginSuccess : ManageMessageId.Error;
-            return RedirectToAction(nameof(ManageLogins), new { Message = message });
+            if (!result.Succeeded)
+            {
+                throw new ApplicationException($"Unexpected error occurred adding external login for user with ID '{user.Id}'.");
+            }
+
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            StatusMessage = "The external login was added.";
+            return RedirectToAction(nameof(ExternalLogins));
         }
 
         #region Helpers
