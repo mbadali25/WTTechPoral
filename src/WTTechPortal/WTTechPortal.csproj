@@ -8,7 +8,7 @@
     <PackageId>WTTechPortal</PackageId>
     <UserSecretsId>aspnet-WTTechPortal-851be2af-cfd0-4854-97ed-3a325b5dab16</UserSecretsId>
     <RuntimeFrameworkVersion>2.0.0</RuntimeFrameworkVersion>
-    <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;dnxcore50;portable-net45+win8</PackageTargetFallback>
+    <AssetTargetFallback>$(AssetTargetFallback);dotnet5.6;dnxcore50;portable-net45+win8</AssetTargetFallback>
     <Version>1.5.0</Version>
     <Authors>WT TechSolutions</Authors>
   </PropertyGroup>
