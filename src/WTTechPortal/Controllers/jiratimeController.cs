@@ -88,7 +88,7 @@ namespace WTTechPortal.Controllers
             }
 
             
-            var results = _context.jiraissue.Include(cv => cv.customfieldvalues).Include(co => co.customfieldvalues.customfieldoptions).Include(x => x.projects).Include(i => i.issusestatusname).Include(r => r.resolutions).Include(w => w.worklogs).Where(r => r.RESOLUTIONDATE.HasValue).Where(b => b.TIMESPENT.HasValue).Where(m => m.DUEDATE.Value.Month.Equals(month)).Where(y => y.DUEDATE.Value.Year.Equals(year));
+            var results = _context.jiraissue.Include(cv => cv.customfieldvalues).Include(co => co.customfieldvalues.customfieldoptions).Include(x => x.projects).Include(i => i.issusestatusname).Include(r => r.resolutions).Include(w => w.worklogs).Where(cfc => cfc.customfieldvalues.CUSTOMFIELD.Equals(10208)).Where(r => r.RESOLUTIONDATE.HasValue).Where(b => b.TIMESPENT.HasValue).Where(m => m.DUEDATE.Value.Month.Equals(month)).Where(y => y.DUEDATE.Value.Year.Equals(year));
             if (projectid != null)
             {
                 results = results.Where(a => a.PROJECT.Equals(projectid));
@@ -121,7 +121,7 @@ namespace WTTechPortal.Controllers
                         select a);
 
 
-            list = list.Include(cv => cv.customfieldvalues).Include(co => co.customfieldvalues.customfieldoptions);
+            list = list.Include(cv => cv.customfieldvalues).Include(co => co.customfieldvalues.customfieldoptions).Where(cfc => cfc.customfieldvalues.CUSTOMFIELD.Equals(10208));
 
             var group = (list.GroupBy(a => a.customfieldvalues.customfieldoptions).Select(a => new { Hours = a.Sum(b => b.TIMESPENThr), Name = a.Key.customvalue, WorkName = a.Select(x => x.customfieldvalues.customfieldoptions.customvalue).First() }).Select(r => new SelectListItem
             {

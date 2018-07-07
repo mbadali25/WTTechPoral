@@ -90,6 +90,7 @@ namespace WTTechPortal.Models.Jira
         [ForeignKey("ID")]
         public customfieldvalue customfieldvalues { get; set; }
 
+			
         [ForeignKey("PROJECT")]
         public project projects { get; set; }
 
