@@ -18,7 +18,7 @@ namespace WTTechPortal.Models.Jira
         
         public int CUSTOMFIELD { get; set; }
 
-        public int STRINGVALUE { get; set; }
+        public int? STRINGVALUE { get; set; }
 
         [ForeignKey("STRINGVALUE")]
         public customfieldoption customfieldoptions { get; set; }

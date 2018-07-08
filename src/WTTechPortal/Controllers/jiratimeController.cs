@@ -117,13 +117,14 @@ namespace WTTechPortal.Controllers
             }
 
 
-            var list = (from a in results                
+            var list = (from a in results
+                        where a.customfieldvalues.STRINGVALUE != null
                         select a);
 
 
-            list = list.Include(cv => cv.customfieldvalues).Include(co => co.customfieldvalues.customfieldoptions).Where(cfc => cfc.customfieldvalues.CUSTOMFIELD.Equals(10208));
+            list = list.Include(cv => cv.customfieldvalues).Include(co => co.customfieldvalues.customfieldoptions).Where(cfc => cfc.customfieldvalues.CUSTOMFIELD.Equals(10208)).Where(cf1 => cf1.customfieldvalues.STRINGVALUE.HasValue);
 
-            var group = (list.GroupBy(a => a.customfieldvalues.customfieldoptions).Select(a => new { Hours = a.Sum(b => b.TIMESPENThr), Name = a.Key.customvalue, WorkName = a.Select(x => x.customfieldvalues.customfieldoptions.customvalue).First() }).Select(r => new SelectListItem
+            var group = ((list.Where(y => y.customfieldvalues.CUSTOMFIELD.Equals(10208)).OrderBy( y => y.customfieldvalues.customfieldoptions.customvalue)).GroupBy(a => a.customfieldvalues.customfieldoptions).Select(a => new { Hours = a.Sum(b => b.TIMESPENThr), Name = a.Key.customvalue, WorkName = a.Select(x => x.customfieldvalues.customfieldoptions.customvalue).First() }).Select(r => new SelectListItem
             {
                 Text = r.WorkName,
                 Value = r.Hours.ToString()
